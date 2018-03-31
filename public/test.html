@@ -1,0 +1,53 @@
+<!-- AR.js by @jerome_etienne - github: https://github.com/jeromeetienne/ar.js - info: https://medium.com/arjs/augmented-reality-in-10-lines-of-html-4e193ea9fdbf -->
+<html>
+  <head>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.0/aframe/examples/vendor/aframe/build/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.0/aframe/build/aframe-ar.js"></script>
+  </head>
+  <body style='margin : 0px; overflow: hidden;'>
+  	<a-scene embedded arjs='trackingMethod: best;'>
+        <a-anchor hit-testing-enabled='true' id="anchor">
+        </a-anchor>
+  		<a-camera-static/>
+  	</a-scene>
+    <script type="text/javascript">
+      var a_anchor = document.getElementById("anchor");
+      var tableTop = document.createElement("a-box");
+      tableTop.setAttribute("src", "../texture/wood_128x128.jpg");
+      tableTop.setAttribute("scale", "2.0 0.1 2.0");
+      tableTop.setAttribute("position", "0.0 1.0 0.0");
+      a_anchor.appendChild(tableTop);
+      var tableLegs = new Array();
+      var k = 0;
+      for (var i = -1; i <= 1; i += 2) {
+        for (var j = -1; j <= 1; j += 2) {
+          tableLegs[k] = document.createElement("a-box");
+          tableLegs[k].setAttribute("src", "../texture/wood_128x128.jpg");
+          tableLegs[k].setAttribute("scale", "0.1 1.0 0.1");
+          tableLegs[k].setAttribute("position", i*0.9 + " 0.5 " + j*0.9);
+          a_anchor.appendChild(tableLegs[k]);
+          k++;
+        }
+      }
+
+      var chairTop = document.createElement("a-box");
+      chairTop.setAttribute("src", "../exture/wood_128x128.jpg");
+      chairTop.setAttribute("scale", "0.8 0.1 0.8");
+      chairTop.setAttribute("position", "1.0 0.5 0.0");
+      a_anchor.appendChild(chairTop);
+      var chairLegs = new Array();
+      k = 0;
+      for (var i = 0.7; i <= 1.3; i += 0.6) {
+        for (var j = -0.3; j <= 0.3; j += 0.6) {
+          chairLegs[k] = document.createElement("a-box");
+          chairLegs[k].setAttribute("src", "../texture/wood_128x128.jpg");
+          chairLegs[k].setAttribute("scale", "0.1 0.5 0.1");
+          chairLegs[k].setAttribute("position", i + " 0.2 " + j);
+          a_anchor.appendChild(chairLegs[k]);
+          k++;
+        }
+      }
+
+    </script>
+  </body>
+</html>
