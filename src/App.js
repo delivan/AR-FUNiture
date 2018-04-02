@@ -11,7 +11,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to AR FUNiture</h1>
         </header>
         <p className="App-intro">
-          <a href="./test.html">Get start!</a>
+          Get start!
         </p>
       </div>
     );
