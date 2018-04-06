@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Design from './Design';
+import Introduction from './Introduction';
 
 class App extends Component {
   render() {
@@ -10,9 +12,13 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to AR FUNiture</h1>
         </header>
-        <p className="App-intro">
-          Get start!
-        </p>
+        <Introduction />
+        <div className="App-design">      
+          <Design />
+          <Design />
+          <Design />
+          <Design />
+        </div>
       </div>
     );
   }
