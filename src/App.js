@@ -16,6 +16,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <span>
+            <Link to="/components/Home">Home</Link>
             <button><Link to="/components/Register">Register</Link></button>
           </span>
           
