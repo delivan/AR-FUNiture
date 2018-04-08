@@ -20,10 +20,9 @@ class Ar extends Component {
           </Marker>
           <div className="AR-tip">
             <p>카테고리를 선택하세요</p>
-              <div>
-                <Link to="/">사용법</Link>
-              </div>
-            <div className="gotit btn custom-button">시작</div>
+            <div>
+              <Link to="/">사용법</Link>
+            </div>
           </div>
         </AFrameRenderer>
       );
