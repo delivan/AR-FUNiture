@@ -8,6 +8,7 @@ import {Router, Switch, Route, Link} from 'react-router-dom';
 import Register from './Register';
 import Home from './Home';
 import Introduction from './Introduction';
+import Ar from './Ar';
 
 
 class App extends Component {
@@ -16,26 +17,18 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <span>
-            <Link to="/components/Home">Home</Link>
-            <button><Link to="/components/Register">Register</Link></button>
+            <button><Link to="/">Home</Link></button>
+            <button><Link to="/register">Register</Link></button>
+            <button><Link to="/ar">Go to start AR</Link></button>
           </span>
-          
         </header>
-
-
         <div className="body">
           <Switch>
-            <Route path="/components/Home" exact component={Home} />
-            <Route path="/components/Register" component={Register} />
-            <Route path="/Introduction" component={Introduction}/>
+            <Route path="/" exact component={Home} />
+            <Route path="/register" component={Register} />
+            <Route path="/ar" component={Ar} />
+            <Route path="/introduction" component={Introduction}/>
           </Switch>
-            {/* <Introduction /> */}
-            <div className="App-design">      
-              <Design />
-              <Design />
-              <Design />
-              <Design />
-            </div>
         </div>
       </div>
     );
