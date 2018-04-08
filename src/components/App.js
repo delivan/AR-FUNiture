@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import logo from '../img/logo.svg';
+import '../css/App.css';
 import Design from './Design';
 
 import {Router, Switch, Route, Link} from 'react-router-dom';
 
-import Register from './components/Register';
-import Home from './components/Home';
+import Register from './Register';
+import Home from './Home';
 import Introduction from './Introduction';
 
 

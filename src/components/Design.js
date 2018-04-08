@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Sample from './designSample.jpg';
-import './Design.css';
+import Sample from '../img/designSample.jpg';
+import '../css/Design.css';
 
 
 class Design extends Component {
