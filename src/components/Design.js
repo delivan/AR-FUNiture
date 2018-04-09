@@ -6,16 +6,29 @@ import '../css/Design.css';
 class Design extends Component {
   render() {
     return (
+      <div>
+        < DesignCard />
+        < DesignCard />
+        < DesignCard />
+        < DesignCard />
+      </div>
+    )
+  }
+}
+
+class DesignCard extends Component {
+  render() {
+    return (
       <div className="Design">
         {/* 디자인 이미지 */}
         <div className="Design__Colums">
-            <DesignImage />
+          <DesignImage />
         </div>
         {/* 디자인 소개 */}
         <div className="Design__Colums">
           <h1>Design sample</h1>
-          <p className="Design__Synopsis"> 
-              asdgasdasfsdf
+          <p className="Design__Synopsis">
+            asdgasdasfsdf
               asdfasdf
               asdfasdfasdf
               asdfasdf
