@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import { AFrameRenderer, Marker } from 'react-web-ar';
-import { Link } from 'react-router-dom';
 import WoodTexture from '../img/texture/wood_128x128.jpg';
+import Button from 'material-ui/Button';
 import '../css/Ar.css';
 
 class Ar extends Component {
-  componentWillUnmount() {
+  componentWillUnmount = () => {
+    window.location.reload();
+  }
+
+  back = () => {
     window.location.reload();
   }
 
   render() {
+    const { category } = this.props;
+    const { back } = this;
       return (
         <div className="AR">
         <AFrameRenderer getSceneRef={(ref) => this.scene = ref} embedded>
@@ -21,9 +27,9 @@ class Ar extends Component {
             <a-box src={WoodTexture} position="0.9 0.5 0.9" scale='0.1 1.0 0.1'/>
           </Marker>
           <div className="AR-tip">
-            <p>카테고리를 선택하세요</p>
+            <p>{category}</p>
             <div>
-              <button><Link to='/'>사용법</Link></button>
+            <Button onClick={this.back} variant="raised" color="secondary">뒤로가기</Button>
             </div>
           </div>
         </AFrameRenderer>

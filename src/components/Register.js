@@ -3,7 +3,7 @@ import { register } from '../action/Auth';
 import { Link } from 'react-router-dom';
 import Home from './Home';
 
-export default class Register extends Component{
+class Register extends Component{
 
 
     constructor(props){
@@ -26,7 +26,7 @@ export default class Register extends Component{
     }
 
     handleSubmit = (e) => {
-        register(this.state.email, this.state.pw, this.state.phone);    
+        register(this.state.email, this.state.pw, this.state.phone);
     }
 
 
@@ -50,3 +50,5 @@ export default class Register extends Component{
         )
     }
 }
+
+export default Register;

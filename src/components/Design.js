@@ -1,33 +1,36 @@
 import React, { Component } from 'react';
 import Sample from '../img/designSample.jpg';
-import '../css/Design.css';
 
+const styles = {
+  container: {
+    position: 'relative',
+    height: '100%',
+    },
 
-class Design extends Component {
-  render() {
-    return (
-      <div className="Design">
-        {/* 디자인 이미지 */}
-        <div className="Design__Colums">
-            <DesignImage />
-        </div>
-        {/* 디자인 소개 */}
-        <div className="Design__Colums">
-          <h1>Design sample</h1>
-          <p className="Design__Synopsis"> 
-              asdgasdasfsdf
-              asdfasdf
-              asdfasdfasdf
-              asdfasdf
-          </p>
-        </div>
-      </div>
-    )
-  }
+    gallery: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        padding: '0.5rem 0.5rem 2.5rem 0.5rem',
+        position: 'relative',
+        overflowY: 'scroll',
+        height: '100%',
+    }
 }
 
-class DesignImage extends Component {
+const defaultImages = [
+    require('../img/designSample.jpg'),
+];
 
+const Design = ({ images = defaultImages, onSelected }) => (
+      <div style={styles.container}>
+          <div style={styles.gallery}>
+              {images.map(image => <GalleryItem key={image} image={image} onSelected={onSelected} />)}
+          </div>
+      </div>
+)
+
+class DesignImage extends Component {
   render() {
     return (
       // <img src={design} />
