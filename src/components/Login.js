@@ -31,7 +31,6 @@ export default class Login extends Component {
             <div className="col-sm-6 col-sm-offset-3">
                 <h1> Login </h1>
                 <form onSubmit={this.handleSubmit}>
-
                     <div className="form-group">
                         <label>Email</label>
                         <input className="form-control" placeholder="Email"/>
