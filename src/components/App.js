@@ -7,6 +7,7 @@ import Register from './Register';
 import Home from './Home';
 import Introduction from './Introduction';
 import Login from './Login';
+import Ar from './Ar';
 
 import { Input, Button, Container } from 'mdbreact';
 import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact';
@@ -67,12 +68,15 @@ class App extends Component {
                 <NavItem>
                   <NavLink className="nav-link" to="/components/Login">Login</NavLink>
                 </NavItem>
+                <NavItem>
+                  <NavLink className="nav-link" to="/components/Ar">Go to start AR</NavLink>
+                </NavItem>
               </NavbarNav>
             </Collapse>
           </Navbar>
         </Container>
             
-        <div className="body">
+        <div className="body" style={{overflowY: 'scroll'}}>
           <Button variant="raised" color="primary">
             Hello World
           </Button>
@@ -81,6 +85,7 @@ class App extends Component {
             <Route path="/components/Register" component={Register} />
             <Route path="/Introduction" component={Introduction}/>
             <Route path="/components/Login" component={Login} />
+            <Route path="/components/Ar" component={Ar} />
           </Switch>
             {/* <Introduction /> */}      
         </div>
