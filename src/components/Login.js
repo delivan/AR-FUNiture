@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { login } from '../action/Auth';
+
 
 export default class Login extends Component {
 
@@ -21,7 +23,9 @@ export default class Login extends Component {
     }
 
     handleSubmit = (e) => {
-        // register(this.state.email, this.state.pw, this.state.phone);    
+        e.preventDefault();
+        login(this.state.email, this.state.pw); 
+        console.log("login success")   
     }
 
     // input 창 value, name, onChange 설정하기
@@ -32,12 +36,10 @@ export default class Login extends Component {
                 <h1> Login </h1>
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group">
-                        <label>Email</label>
-                        <input className="form-control" placeholder="Email"/>
+                        <input className="form-control" name="email" value={this.state.email} onChange={this.handleChange} placeholder="Email"/>
                     </div>
                     <div className="form-group">
-                        <label>Password</label>
-                        <input type="password" className="form-control" placeholder="Password" />
+                        <input type="password" className="form-control" name="pw" value={this.state.pw} onChange={this.handleChange} placeholder="Password" />
                     </div>
                     <button type="submit" className="btn btn-primary">Login</button>
                 </form>
