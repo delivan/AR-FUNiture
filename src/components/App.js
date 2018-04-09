@@ -22,7 +22,7 @@ class App extends Component {
             <button><Link to="/ar">Go to start AR</Link></button>
           </span>
         </header>
-        <div className="body">
+        <div className="body" style={{overflowY: 'scroll'}}>
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/register" component={Register} />

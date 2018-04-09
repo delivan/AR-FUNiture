@@ -6,11 +6,13 @@ import '../css/Ar.css';
 
 class Ar extends Component {
   componentWillUnmount() {
-    this.renderer && this.renderer.dispose();
+    window.location.reload();
   }
+
   render() {
       return (
-        <AFrameRenderer>
+        <div className="AR">
+        <AFrameRenderer getSceneRef={(ref) => this.scene = ref} embedded>
           <Marker parameters={{ preset: 'hiro' }}>
             <a-box src={WoodTexture} position="0.0 1.0 0.0" scale='2.0 0.1 2.0'/>
             <a-box src={WoodTexture} position="-0.9 0.5 -0.9" scale='0.1 1.0 0.1'/>
@@ -21,10 +23,11 @@ class Ar extends Component {
           <div className="AR-tip">
             <p>카테고리를 선택하세요</p>
             <div>
-              <Link to="/">사용법</Link>
+              <button><Link to='/'>사용법</Link></button>
             </div>
           </div>
         </AFrameRenderer>
+      </div>
       );
     }
   }
