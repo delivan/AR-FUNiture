@@ -41,20 +41,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {/* <header className="App-header">
-          <span>
-            <button><Link to="/components/Home">Home</Link></button>
-            <button><Link to="/components/Register">Register</Link></button>
-            <button><Link to="/components/Login">Login</Link></button>
-          </span>
-          
-        </header> */}
-
+        
         {/* Main navigation */}
         <Container>
           <Navbar color="indigo" dark expand="lg">
             <NavbarBrand href="/">
-              <strong>Navbar</strong>
+              <strong>ARFuniture</strong>
             </NavbarBrand>
             {!this.state.isWideEnough && <NavbarToggler onClick={this.onClick} />}
             <Collapse isOpen={this.state.collapse} navbar>
@@ -77,9 +69,7 @@ class App extends Component {
         </Container>
             
         <div className="body" style={{overflowY: 'scroll'}}>
-          <Button variant="raised" color="primary">
-            Hello World
-          </Button>
+          
           <Switch>
             <Route path="/components/Home" exact component={Home} />
             <Route path="/components/Register" component={Register} />
