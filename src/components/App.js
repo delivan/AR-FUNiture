@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Home from './Home';
 import Ar from './Ar';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 
 const styles = {
   container: {
@@ -16,6 +16,7 @@ const styles = {
 };
 
 const categories = ['desk', 'chair', 'bed', 'closet'];
+const theme = createMuiTheme();
 
 class App extends Component {
   state = {
@@ -31,7 +32,7 @@ class App extends Component {
     const {category} = this.state;
     const {handleSelectCategory} = this;
 
-    return (<MuiThemeProvider>
+    return (<MuiThemeProvider theme={theme}>
       <div style={styles.container}>
         {!category && <Home categories={categories} onSelectCategory={this.handleSelectCategory}/>}
         {category && <Ar category={category}/>}
