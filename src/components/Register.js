@@ -27,7 +27,12 @@ export default class Register extends Component{
 
     handleSubmit = (e) => {
         e.preventDefault()
-        register(this.state.email, this.state.pw, this.state.phone);    
+        register(this.state.email, this.state.pw, this.state.phone);   
+        this.setState({
+            email: '',
+            pw: '',
+            phone: ''
+        }) 
     }
 
 
