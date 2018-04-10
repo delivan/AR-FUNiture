@@ -22,10 +22,15 @@ export default class Login extends Component {
 
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = async(e) => {
         e.preventDefault();
-        login(this.state.email, this.state.pw); 
-        console.log("login success")   
+        try {
+            await login(this.state.email, this.state.pw);
+            this.props.history.push("/components/Home");
+        } catch(e){
+            alert(e.meesage);
+        }
+        
     }
 
     // input 창 value, name, onChange 설정하기
