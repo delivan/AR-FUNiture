@@ -13,6 +13,9 @@ import { Input, Button, Container } from 'mdbreact';
 import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact';
 import { BrowserRouter } from 'react-router-dom';
 
+import { firebaseAuth } from '../config/firebase'
+import { logout } from '../action/Auth';
+
 class App extends Component {
 
   constructor(props) {
@@ -20,10 +23,30 @@ class App extends Component {
     this.state = {
       collapse: false,
       isWideEnough: false,
-      dropdownOpen: false
+      dropdownOpen: false,
+      isLogin: false
     };
     this.onClick = this.onClick.bind(this);
     this.toggle = this.toggle.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  componentDidMount () {
+    this.confirmLogin = firebaseAuth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({
+          isLogin: true,
+        })
+      } else {
+        this.setState({
+          isLogin: false,
+        })
+      }
+    })
+  }
+
+  componentWillUnmount () {
+    this.confirmLogin()
   }
 
   onClick() {
@@ -38,6 +61,12 @@ class App extends Component {
     });
   }
 
+  async handleLogout() {
+    await logout();
+
+  }
+
+
   render() {
     return (
       <div className="App">
@@ -51,15 +80,25 @@ class App extends Component {
             {!this.state.isWideEnough && <NavbarToggler onClick={this.onClick} />}
             <Collapse isOpen={this.state.collapse} navbar>
               <NavbarNav>
-                <NavItem active>
-                  <NavLink className="nav-link" to="/components/Home">Home</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink className="nav-link" to="/components/Register">Register</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink className="nav-link" to="/components/Login">Login</NavLink>
-                </NavItem>
+                <span>
+                  <NavItem active>
+                    <NavLink className="nav-link" to="/components/Home">Home</NavLink>
+                  </NavItem>
+                </span>
+
+                { this.state.isLogin ?
+                <button onClick={this.handleLogout}>Logout</button>
+                :  
+                <span>
+                  <NavItem>
+                    <NavLink className="nav-link" to="/components/Register">Register</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink className="nav-link" to="/components/Login">Login</NavLink>
+                  </NavItem>
+                </span>
+                }
+
                 <NavItem>
                   <NavLink className="nav-link" to="/components/Ar">Go to start AR</NavLink>
                 </NavItem>
