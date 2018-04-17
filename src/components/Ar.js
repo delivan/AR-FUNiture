@@ -47,17 +47,15 @@ class Ar extends Component {
         <div style={styles.renderer}>
           <AFrameRenderer inherit={true} embedded>
               <Marker parameters={{ preset: 'hiro' }}>
-                {category == 'desk' && <a-gltf-model src={process.env.PUBLIC_URL + '/models/dark_cherry_desk/scene.gltf'} scale="0.01 0.01 0.01"></a-gltf-model>}
-                {category == 'chair' && <a-gltf-model src={process.env.PUBLIC_URL + '/models/chair/scene.gltf'} scale="0.05 0.05 0.05"></a-gltf-model>}
-                {category == 'bed' && <a-gltf-model src={process.env.PUBLIC_URL + '/models/bed/scene.gltf'} scale="0.03 0.03 0.03"></a-gltf-model>}
-                {category == 'closet' && <a-gltf-model src={process.env.PUBLIC_URL + '/models/closet/scene.gltf'} scale="0.1 0.1 0.1"></a-gltf-model>}
+                {category == 'desk' && <a-gltf-model src={process.env.PUBLIC_URL + '/models/desk1/scene.gltf'} scale="0.03 0.03 0.03"></a-gltf-model>}
+                {category == 'chair' && <a-gltf-model src={process.env.PUBLIC_URL + '/models/chair1/scene.gltf'} scale="0.02 0.02 0.02"></a-gltf-model>}
+                {category == 'bed' && <a-gltf-model src={process.env.PUBLIC_URL + '/models/bed1/scene.gltf'}></a-gltf-model>}
+                {category == 'closet' && <a-gltf-model src={process.env.PUBLIC_URL + '/models/closet1/scene.gltf'} scale="0.03 0.03 0.03"></a-gltf-model>}
               </Marker>
               <div style={styles.backButton}>
                 <Button onClick={this.handleBack} variant="raised" color="secondary">뒤로가기</Button>
               </div>
-              <div style={styles.tips}>
-                <p>{category}</p>
-              </div>
+
           </AFrameRenderer>
         </div>
       </div>
