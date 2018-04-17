@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Design from './Design';
 import Home from './Home';
 import Ar from './Ar';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
@@ -25,7 +26,6 @@ class App extends Component {
 
   handleSelectCategory = (category) => {
     this.setState({category});
-    console.log(category);
   }
 
   render() {

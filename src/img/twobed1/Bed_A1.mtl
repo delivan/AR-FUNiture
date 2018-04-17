@@ -1,0 +1,60 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 22.09.2017 21:46:40
+
+newmtl Materass
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka E:\SK Hentry\Letto Castello\end1\Materass-CompleteMap.jpg
+	map_Kd E:\SK Hentry\Letto Castello\end1\Materass-CompleteMap.jpg
+	map_bump Map__10_Normal_Bump.tga
+
+newmtl Dadi
+	Ns 32.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.738000 0.738000 0.738000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka E:\SK Hentry\Letto Castello\end1\DadiDiffuseMap.jpg
+	map_Kd E:\SK Hentry\Letto Castello\end1\DadiDiffuseMap.jpg
+
+newmtl Bed
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.189000 0.189000 0.189000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka E:\SK Hentry\Letto Castello\end1\Bed-DiffuseMap.jpg
+	map_Kd E:\SK Hentry\Letto Castello\end1\Bed-DiffuseMap.jpg
+	map_bump Map__17_Normal_Bump.tga
+
+newmtl MetalStair
+	Ns 36.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.855000 0.855000 0.855000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka E:\SK Hentry\Letto Castello\end1\MetalStairCompleteMap.jpg
+	map_Kd E:\SK Hentry\Letto Castello\end1\MetalStairCompleteMap.jpg

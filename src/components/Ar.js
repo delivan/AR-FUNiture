@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { AFrameRenderer, Marker } from 'react-web-ar';
-import WoodTexture from '../img/texture/wood_128x128.jpg';
 import Button from 'material-ui/Button';
 
 const styles = {
@@ -29,6 +28,9 @@ const styles = {
 };
 
 class Ar extends Component {
+  state = {
+    texture: null,
+  };
   componentWillUnmount = () => {
     window.location.reload();
   }
@@ -45,11 +47,10 @@ class Ar extends Component {
         <div style={styles.renderer}>
           <AFrameRenderer inherit={true} embedded>
               <Marker parameters={{ preset: 'hiro' }}>
-                <a-box src={WoodTexture} position="0.0 1.0 0.0" scale='2.0 0.1 2.0'/>
-                <a-box src={WoodTexture} position="-0.9 0.5 -0.9" scale='0.1 1.0 0.1'/>
-                <a-box src={WoodTexture} position="-0.9 0.5 0.9" scale='0.1 1.0 0.1'/>
-                <a-box src={WoodTexture} position="0.9 0.5 -0.9" scale='0.1 1.0 0.1'/>
-                <a-box src={WoodTexture} position="0.9 0.5 0.9" scale='0.1 1.0 0.1'/>
+                {category == 'desk' && <a-gltf-model src={process.env.PUBLIC_URL + '/models/dark_cherry_desk/scene.gltf'} scale="0.01 0.01 0.01"></a-gltf-model>}
+                {category == 'chair' && <a-gltf-model src={process.env.PUBLIC_URL + '/models/chair/scene.gltf'} scale="0.05 0.05 0.05"></a-gltf-model>}
+                {category == 'bed' && <a-gltf-model src={process.env.PUBLIC_URL + '/models/bed/scene.gltf'} scale="0.03 0.03 0.03"></a-gltf-model>}
+                {category == 'closet' && <a-gltf-model src={process.env.PUBLIC_URL + '/models/closet/scene.gltf'} scale="0.1 0.1 0.1"></a-gltf-model>}
               </Marker>
               <div style={styles.backButton}>
                 <Button onClick={this.handleBack} variant="raised" color="secondary">뒤로가기</Button>

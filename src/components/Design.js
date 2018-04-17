@@ -1,35 +1,43 @@
 import React, { Component } from 'react';
 import Sample from '../img/designSample.jpg';
+import '../css/Design.css';
+import { Button, Card, CardBody, CardImage, CardTitle, CardText } from 'mdbreact';
 
-const styles = {
-  container: {
-    position: 'relative',
-    height: '100%',
-    },
 
-    gallery: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        padding: '0.5rem 0.5rem 2.5rem 0.5rem',
-        position: 'relative',
-        overflowY: 'scroll',
-        height: '100%',
-    }
+class Design extends Component {
+  render() {
+    return (
+      <div className="row">
+        <div className="col"><DesignCard/></div>
+        <div className="col"><DesignCard/></div>
+        <div className="w-100"></div>
+        <div className="col"><DesignCard/></div>
+        <div className="col"><DesignCard/></div>
+      </div>
+    )
+  }
 }
 
-const defaultImages = [
-    require('../img/designSample.jpg'),
-];
-
-const Design = ({ images = defaultImages, onSelected }) => (
-      <div style={styles.container}>
-          <div style={styles.gallery}>
-              {images.map(image => <GalleryItem key={image} image={image} onSelected={onSelected} />)}
-          </div>
-      </div>
-)
-
+class DesignCard extends Component {
+  render() {
+    return (
+      // <div className="Design">
+      //   {/* 디자인 이미지 */}
+      //   <div className="Design__Colums">
+      //     <DesignImage />
+      //   </div>
+      // </div>
+      <Card narrow>
+        <CardImage className="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%282%29.jpg" />
+        <CardBody>
+          <CardTitle>Card title</CardTitle>
+          <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+          <Button href="#">Button</Button>
+        </CardBody>
+      </Card>
+    )
+  }
+}
 class DesignImage extends Component {
   render() {
     return (
@@ -39,5 +47,4 @@ class DesignImage extends Component {
     );
   }
 }
-
 export default Design;
