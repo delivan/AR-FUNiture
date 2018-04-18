@@ -55,7 +55,6 @@ class Ar extends Component {
               <div style={styles.backButton}>
                 <Button onClick={this.handleBack} variant="raised" color="secondary">뒤로가기</Button>
               </div>
-
           </AFrameRenderer>
         </div>
       </div>
