@@ -38,6 +38,7 @@ class DesignCard extends Component {
     )
   }
 }
+
 class DesignImage extends Component {
   render() {
     return (
