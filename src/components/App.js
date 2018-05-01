@@ -27,10 +27,11 @@ class App extends Component {
 
   render() {
     const {category} = this.state;
+    const {handleSelectCategory} = this;
 
     return (<MuiThemeProvider theme={theme}>
       <div style={styles.container}>
-        {!category && <Home categories={categories}/>}
+        {!category && <Home categories={categories} onSelectCategory={this.handleSelectCategory}/>}
         {category && <Ar category={category}/>}
       </div>
     </MuiThemeProvider>);
