@@ -4,11 +4,7 @@ import Button from 'material-ui/Button';
 
 const styles = {
   container: {
-    minHeight: '100%',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
+    overflowY: 'scroll',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPositionX: '50%',
