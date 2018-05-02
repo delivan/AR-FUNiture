@@ -30,11 +30,28 @@ const styles = {
 };
 
 class MenuAppBar extends React.Component {
+
   state = {
     auth: false,
     anchorEl: null,
-    loginComponent: false
+    loginComponent: false,
+    user: ''
   };
+
+  componentWillMount() {
+    console.log('componentWillMount (deprecated)');
+  }
+
+  componentDidMount() {
+    console.log('componentDidMount');
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('componentWillReceiveProps')
+    console.log('nextProps.user', nextProps.user)
+    this.setState({ user: nextProps.user})
+    console.log('user', this.state.user)
+  }
 
   handleChange = (event, checked) => {
     this.setState({ auth: checked });
@@ -50,7 +67,6 @@ class MenuAppBar extends React.Component {
 
   handleLogin = () => {
     this.setState({ loginComponent: true});
-    console.log('click login', this.loginComponent)
   }
 
 
@@ -76,7 +92,7 @@ class MenuAppBar extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="title" color="inherit" className={classes.flex}>
-              Title
+              ArFuniture
             </Typography>
             {auth ? 
             <div>
@@ -107,8 +123,21 @@ class MenuAppBar extends React.Component {
               </Menu>
             </div>
             : 
-            <div> 
-                <Button color="inherit" onClick={this.handleLogin}>Login</Button>   
+            <div>
+              {console.log('login icon',this.state.user)}
+              {this.state.user ? 
+                <IconButton
+                  aria-owns={open ? 'menu-appbar' : null}
+                  aria-haspopup="true"
+                  onClick={this.handleMenu}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+                :
+                <Button color="inherit" onClick={this.handleLogin}>Login</Button>  
+              } 
+              
             </div>
             }
           </Toolbar>
