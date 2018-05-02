@@ -12,6 +12,7 @@ import Ar from './Ar';
 import { Input, Button, Container } from 'mdbreact';
 import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact';
 import { BrowserRouter } from 'react-router-dom';
+import MenuAppbar from './MenuAppbar';
 
 class App extends Component {
 
@@ -38,13 +39,17 @@ class App extends Component {
     });
   }
 
+  __turnComponent = () => {
+    console.log('click turn:', this)
+  }
+
   render() {
     return (
       <div className="App">
         
         {/* Main navigation */}
         <Container>
-          <Navbar color="indigo" dark expand="lg">
+          {/* <Navbar color="indigo" dark expand="lg">
             <NavbarBrand href="/">
               <strong>ARFuniture</strong>
             </NavbarBrand>
@@ -65,9 +70,10 @@ class App extends Component {
                 </NavItem>
               </NavbarNav>
             </Collapse>
-          </Navbar>
+          </Navbar> */}
+          <MenuAppbar />
         </Container>
-            
+        
         <div className="body" style={{overflowY: 'scroll'}}>
           
           <Switch>
