@@ -55,6 +55,10 @@ class MenuAppBar extends React.Component {
     this.handleClose();
   }
 
+  componentWillMount() {
+    currentRoute: this.props.currentRoute
+  }
+
   render() {
     // console.log('props currentRout',this.props.currentRoute)
     const { classes } = this.props;
@@ -72,6 +76,7 @@ class MenuAppBar extends React.Component {
               ArFuniture
             </Typography>
             {console.log('in menu user',this.props.currentUser)}
+            {console.log('in menu route', this.state.currentRoute)}
             {this.props.currentUser ? 
               <div>
                 <IconButton

@@ -40,7 +40,6 @@ export default class Login extends Component {
   render () {
     return (
       <div>
-        <div className="col-sm-6 col-sm-offset-3">    
           <h1> Login </h1>
           <form onSubmit={this.handleSubmit}>
             <div className="form-group">
@@ -50,8 +49,8 @@ export default class Login extends Component {
               <input type="password" className="form-control" name="pw" value={this.state.pw} onChange={this.handleChange} placeholder="Password" />
             </div>
             <button type="submit" className="btn btn-primary">Login</button>
+            <button onClick={() => this.props.__setRoute('register')}> Register </button>
           </form>
-        </div>
       </div>
     )
   }  

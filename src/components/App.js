@@ -58,7 +58,7 @@ class App extends Component {
       case 'login':
         return <Login __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} currentUser={this.state.currentUser} />
       case 'register':
-        return <Register />
+        return <Register __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} />
       case 'ar':
         return <Ar __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} />
       default:
