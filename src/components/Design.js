@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Sample from '../img/designSample.jpg';
+// import Sample from '../img/designSample.jpg';
 import '../css/Design.css';
 import { Button, Card, CardBody, CardImage, CardTitle, CardText } from 'mdbreact';
 
@@ -39,14 +39,14 @@ class DesignCard extends Component {
   }
 }
 
-class DesignImage extends Component {
-  render() {
-    return (
-      // <img src={design} />
-      // <img src={asset} alt="designSample.jpg" />
-      <img src={Sample} className="Design-image" alt="sample" className="Design__Image"/>
-    );
-  }
-}
+// class DesignImage extends Component {
+//   render() {
+//     return (
+//       // <img src={design} />
+//       // <img src={asset} alt="designSample.jpg" />
+//       <img src={Sample} className="Design-image" alt="sample" className="Design__Image"/>
+//     );
+//   }
+// }
 
 export default Design;

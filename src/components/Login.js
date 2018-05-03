@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { login } from '../action/Auth';
-import Home from './Home';
+import MenuAppbar from './MenuAppbar';
 
 
 export default class Login extends Component {
@@ -34,9 +34,7 @@ export default class Login extends Component {
           console.log('after log', this.props)
           console.log('user', this.state.user)
           // this.props.history.push("/components/Home");
-          console.log('push')
       } catch(e){
-          console.log('catch')
           alert(e.meesage);
       }
   }
@@ -47,7 +45,7 @@ export default class Login extends Component {
     return (
       <div>
         {this.state.isUser === true ? 
-          <Home />
+          <MenuAppbar user={this.state.user}/>
           :
           <div className="col-sm-6 col-sm-offset-3">    
             <h1> Login </h1>

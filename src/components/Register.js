@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { register } from '../action/Auth';
-import { Link } from 'react-router-dom';
-import Home from './Home';
+// import { Link } from 'react-router-dom';
+// import Home from './Home';
 
 export default class Register extends Component{
 

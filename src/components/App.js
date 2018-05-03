@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import '../css/App.css';
 
-import {Router, Switch, Route, Link} from 'react-router-dom';
 
-import Register from './Register';
-import Home from './Home';
-import Introduction from './Introduction';
-import Login from './Login';
-import Ar from './Ar';
+// import Register from './Register';
+// import Home from './Home';
+// import Introduction from './Introduction';
+// import Login from './Login';
+// import Ar from './Ar';
 
-import { Input, Button, Container } from 'mdbreact';
-import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact';
-import { BrowserRouter } from 'react-router-dom';
+import { Container } from 'mdbreact';
 import MenuAppbar from './MenuAppbar';
 
 class App extends Component {
@@ -76,13 +73,13 @@ class App extends Component {
         
         <div className="body" style={{overflowY: 'scroll'}}>
           
-          <Switch>
+          {/* <Switch>
             <Route path="/components/Home" exact component={Home} />
             <Route path="/components/Register" component={Register} />
             <Route path="/Introduction" component={Introduction}/>
             <Route path="/components/Login" component={Login} />
             <Route path="/components/Ar" component={Ar} />
-          </Switch>
+          </Switch> */}
             {/* <Introduction /> */}      
         </div>
       </div>
