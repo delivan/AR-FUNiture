@@ -60,7 +60,7 @@ class App extends Component {
       case 'register':
         return <Register />
       case 'ar':
-        return <Ar />
+        return <Ar __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} />
       default:
         return <Home __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} currentUser={this.state.currentUser} />;
     }

@@ -3,6 +3,7 @@ import { AFrameRenderer, Marker } from 'react-web-ar';
 import { Link } from 'react-router-dom';
 import WoodTexture from '../img/texture/wood_128x128.jpg';
 import '../css/Ar.css';
+import PropTypes from 'prop-types';
 
 class Ar extends Component {
   componentWillUnmount() {
@@ -10,8 +11,8 @@ class Ar extends Component {
   }
 
   render() {
-      return (
-        <div className="AR">
+    return (
+      <div className="AR">
         <AFrameRenderer getSceneRef={(ref) => this.scene = ref} embedded>
           <Marker parameters={{ preset: 'hiro' }}>
             <a-box src={WoodTexture} position="0.0 1.0 0.0" scale='2.0 0.1 2.0'/>
@@ -28,8 +29,13 @@ class Ar extends Component {
           </div>
         </AFrameRenderer>
       </div>
-      );
-    }
+    );
   }
+}
+
+Ar.PropTypes = {
+  currentRoute: PropTypes.string,
+  __setRoute: PropTypes.func,
+}
 
 export default Ar;
