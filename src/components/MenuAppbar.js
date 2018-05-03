@@ -11,6 +11,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 // import { FormControlLabel, FormGroup } from 'material-ui/Form';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Button from 'material-ui/Button';
+import { ref, firebaseAuth } from '../config/firebase'
 
 import Home from './Home';
 // import Register from './Register';
@@ -45,15 +46,14 @@ class MenuAppBar extends React.Component {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  // __setRoute = currentRoute => {
-  //   this.setState({ currentRoute }, () => {
-  //     console.log('current route', this.state.currentRoute);
-  //   });
-  // }
-
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
+
+  __logout = () => {
+    firebaseAuth().signOut();
+    this.handleClose();
+  }
 
   render() {
     // console.log('props currentRout',this.props.currentRoute)
@@ -98,6 +98,7 @@ class MenuAppBar extends React.Component {
                 >
                   <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                   <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                  <MenuItem onClick={this.__logout}>Logout</MenuItem>
                 </Menu>
               </div>
             : 
@@ -116,7 +117,6 @@ MenuAppBar.propTypes = {
   currentUser: PropTypes.object,
   currentRoute: PropTypes.string,
   __setRoute: PropTypes.func,
-  __setUser: PropTypes.func
 };
 
 export default withStyles(styles)(MenuAppBar);

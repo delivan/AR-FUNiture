@@ -6,11 +6,12 @@ import Register from './Register';
 import Home from './Home';
 // import Introduction from './Introduction';
 import Login from './Login';
-// import Ar from './Ar';
+import Ar from './Ar';
 
 import { Container } from 'mdbreact';
 import MenuAppbar from './MenuAppbar';
 import { register } from '../action/Auth';
+import { firebaseAuth } from '../config/firebase';
 
 class App extends Component {
 
@@ -19,25 +20,21 @@ class App extends Component {
     this.state = {
       collapse: false,
       isWideEnough: false,
-      dropdownOpen: false
+      dropdownOpen: false,
     };
     this.onClick = this.onClick.bind(this);
     this.toggle = this.toggle.bind(this);
   }
 
   state = {
+    currentRoute: null,
     currentUser: null,
-    currentRoute: null
   }
 
   __setRoute = currentRoute => {
     this.setState({ currentRoute }, () => {
       console.log('current route', this.state.currentRoute);
     });
-  }
-
-  __setUser = currentUser => {
-    this.setState({ currentUser})
   }
 
   onClick() {
@@ -54,17 +51,26 @@ class App extends Component {
 
   get currentComponent() {
     const { currentRoute } = this.state;
-
-    switch (currentRoute) {
+    {console.log('get currentcomponent',this.state.currentUser)}
+    switch ('in app ',currentRoute) {
       case 'home':
-        return <Home />;
+        return <Home __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} currentUser={this.state.currentUser} />;
       case 'login':
-        return <Login __setUser={this.__setUser} __setRoute={this.__setRoute} currentUser={this.state.currentUser} currentRoute={this.state.currentRoute} />
+        return <Login __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} currentUser={this.state.currentUser} />
       case 'register':
         return <Register />
+      case 'ar':
+        return <Ar />
       default:
-        return <Home />;
+        return <Home __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} currentUser={this.state.currentUser} />;
     }
+  }
+
+  componentDidMount() {
+    firebaseAuth().onAuthStateChanged(currentUser => {
+      console.log('app',currentUser)
+      this.setState({currentUser});
+    })
   }
 
   render() {
@@ -72,8 +78,9 @@ class App extends Component {
       <div className="App">
         
         {/* Main */}
+        {console.log('CCC',this.state.currentUser)}
         <Container>
-          <MenuAppbar __setRoute={this.__setRoute} __setUser={this.__setUser} currentUser={this.state.currentUser} currentRoute={this.state.currentRoute}/>
+          <MenuAppbar __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} currentUser={this.state.currentUser}/>
           {this.currentComponent}
         </Container>
         

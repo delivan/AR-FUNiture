@@ -27,9 +27,6 @@ export function saveUser (user, phone) {
 
 export function login(email, pw){
     return firebaseAuth().signInWithEmailAndPassword(email, pw)
-        .then((result) => {
-            const user = result.user;
-        });
 }
 
 export function logout () {
