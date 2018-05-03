@@ -14,6 +14,11 @@
     box-shadow: 0 8px 38px rgba(133, 133, 133, 0.3), 0 5px 12px rgba(133, 133, 133,0.22);
 }
 
+.row {
+  margin-top: 50px;
+}
+
+
 .Design__Column{
     width:30%;
     box-sizing:border-box;

@@ -30,28 +30,12 @@ const styles = {
 };
 
 class MenuAppBar extends React.Component {
-
+  
   state = {
     auth: false,
     anchorEl: null,
-    loginComponent: false,
-    user: ''
+    // currentRoute: this.props.currentRoute
   };
-
-  componentWillMount() {
-    console.log('componentWillMount (deprecated)');
-  }
-
-  componentDidMount() {
-    console.log('componentDidMount');
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps')
-    console.log('nextProps.user', nextProps.user)
-    this.setState({ user: nextProps.user})
-    console.log('user', this.state.user)
-  }
 
   handleChange = (event, checked) => {
     this.setState({ auth: checked });
@@ -61,31 +45,24 @@ class MenuAppBar extends React.Component {
     this.setState({ anchorEl: event.currentTarget });
   };
 
+  // __setRoute = currentRoute => {
+  //   this.setState({ currentRoute }, () => {
+  //     console.log('current route', this.state.currentRoute);
+  //   });
+  // }
+
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
 
-  handleLogin = () => {
-    this.setState({ loginComponent: true});
-  }
-
-
-
   render() {
+    // console.log('props currentRout',this.props.currentRoute)
     const { classes } = this.props;
     const { auth, anchorEl, loginComponent } = this.state;
     const open = Boolean(anchorEl);
 
     return (
       <div className={classes.root}>
-        {/* <FormGroup>
-          <FormControlLabel
-            control={
-              <Switch checked={auth} onChange={this.handleChange} aria-label="LoginSwitch" />
-            }
-            label={auth ? 'Logout' : 'Login'}
-          />
-        </FormGroup> */}
         <AppBar position="static">
           <Toolbar>
             <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
@@ -94,63 +71,52 @@ class MenuAppBar extends React.Component {
             <Typography variant="title" color="inherit" className={classes.flex}>
               ArFuniture
             </Typography>
-            {auth ? 
-            <div>
-              <IconButton
-                aria-owns={open ? 'menu-appbar' : null}
-                aria-haspopup="true"
-                onClick={this.handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={this.handleClose}
-              >
-                <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                <MenuItem onClick={this.handleClose}>My account</MenuItem>
-              </Menu>
-            </div>
-            : 
-            <div>
-              {console.log('login icon',this.state.user)}
-              {this.state.user ? 
+            {console.log('in menu user',this.props.currentUser)}
+            {this.props.currentUser ? 
+              <div>
                 <IconButton
                   aria-owns={open ? 'menu-appbar' : null}
                   aria-haspopup="true"
                   onClick={this.handleMenu}
                   color="inherit"
                 >
-                  <AccountCircle />
+                <AccountCircle />
                 </IconButton>
-                :
-                <Button color="inherit" onClick={this.handleLogin}>Login</Button>  
-              } 
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={open}
+                  onClose={this.handleClose}
+                >
+                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                </Menu>
+              </div>
+            : 
+              <Button color="inherit" onClick={() => this.props.__setRoute('login')}>Login</Button>  
               
-            </div>
             }
           </Toolbar>
         </AppBar>
-
-        { loginComponent ? <Login /> : <Home  />}
       </div>
     );
   }
 }
 
 MenuAppBar.propTypes = {
-  classes: PropTypes.object.isRequired,
+  // classes: PropTypes.object.isRequired,
+  currentUser: PropTypes.object,
+  currentRoute: PropTypes.string,
+  __setRoute: PropTypes.func,
+  __setUser: PropTypes.func
 };
 
 export default withStyles(styles)(MenuAppBar);

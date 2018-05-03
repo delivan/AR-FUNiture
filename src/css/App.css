@@ -1,5 +1,14 @@
 .App {
   text-align: center;
+  background-color: silver;
+}
+
+.Introduction {
+  margin-top: 50px;
+}
+
+.Introduction>h1 {
+  padding: 30px
 }
 
 .App-logo {
