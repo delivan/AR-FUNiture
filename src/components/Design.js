@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import '../css/Design.css';
 import { Button, Card, CardBody, CardImage, CardTitle, CardText } from 'mdbreact';
 import PropTypes from 'prop-types';
-import { ref, firebaseAuth } from '../config/firebase'
+import { firebaseAuth } from '../config/firebase'
 
 class Design extends Component {
   render() {

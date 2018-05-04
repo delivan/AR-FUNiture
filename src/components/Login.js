@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { login } from '../action/Auth';
-import MenuAppbar from './MenuAppbar';
-import Home from './Home';
 import PropTypes from 'prop-types';
-import { ref, firebaseAuth } from '../config/firebase'
-
+import { firebaseAuth } from '../config/firebase'
+import Grid from 'material-ui/Grid'
 
 
 export default class Login extends Component {
@@ -39,19 +37,23 @@ export default class Login extends Component {
   // input 창 value, name, onChange 설정하기
   render () {
     return (
-      <div>
-          <h1> Login </h1>
-          <form onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <input className="form-control" name="email" value={this.state.email} onChange={this.handleChange} placeholder="Email" />
-            </div>
-            <div className="form-group">
-              <input type="password" className="form-control" name="pw" value={this.state.pw} onChange={this.handleChange} placeholder="Password" />
-            </div>
-            <button type="submit" className="btn btn-primary">Login</button>
-            <button onClick={() => this.props.__setRoute('register')}> Register </button>
-          <button onClick={() => this.props.__setRoute('home')}> Cancel </button>
-          </form>
+      <div className='Login'>
+        <Grid item xs={12} sm={3}></Grid>
+        <Grid item xs={12} sm={6}>
+            <h1> Login </h1>
+            <form onSubmit={this.handleSubmit}>
+              <div className="form-group">
+                <input className="form-control" name="email" value={this.state.email} onChange={this.handleChange} placeholder="Email" />
+              </div>
+              <div className="form-group">
+                <input type="password" className="form-control" name="pw" value={this.state.pw} onChange={this.handleChange} placeholder="Password" />
+              </div>
+              <button type="submit" className="btn btn-primary">Login</button>
+              <button onClick={() => this.props.__setRoute('register')}> Register </button>
+            <button onClick={() => this.props.__setRoute('home')}> Cancel </button>
+            </form>
+        </Grid>
+        <Grid item xs={12} sm={3}></Grid>
       </div>
     )
   }  

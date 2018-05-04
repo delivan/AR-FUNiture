@@ -8,7 +8,6 @@ export default class Home extends Component {
     return (
       <div className="container">
         <Introduction />
-        {console.log('home component',this.props.currentUser)}
         <Design __setRoute={this.props.__setRoute} currentRoute={this.props.currentRoute} currentUser={this.props.currentUser} />
       </div>
     )
