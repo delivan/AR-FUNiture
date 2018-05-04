@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { register } from '../action/Auth';
 import PropTypes from 'prop-types';
+import Grid from 'material-ui/Grid';
 
 class Register extends Component{
 
@@ -30,27 +31,32 @@ class Register extends Component{
       pw: '',
       phone: ''
     })      
-    this.props.__setRoute('home');
+    this.props.__setRoute('login');
   }
 
 
   render(){
     return(
-      <div className="col-sm-6 col-sm-offset-3">
-        <h1>Register</h1>
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <input className="form-control" name="email" value={this.state.email} onChange={this.handleChange} placeholder="Email"/>
-          </div>
-          <div className="form-group">
-            <input type="password" className="form-control" name="pw" value={this.state.pw} onChange={this.handleChange} placeholder="Password" />
-          </div>
-          <div className="form-group">
-            <input type="phone" className="form-control" name="phone" value={this.state.phone} onChange={this.handleChange} placeholder="phone" />
-          </div>
-          <button type="submit" className="btn btn-primary">Register</button>
-          <button onClick={() => this.props.__setRoute('home')}> Cancel </button>
-        </form>
+      <div className="Register">
+        <Grid container spacing={24}>
+          <Grid item xs={3}></Grid>
+          <Grid item xs={6}>
+            <h1>Register</h1>
+            <form onSubmit={this.handleSubmit}>
+              <div className="form-group">
+                <input className="form-control" name="email" value={this.state.email} onChange={this.handleChange} placeholder="Email"/>
+              </div>
+              <div className="form-group">
+                <input type="password" className="form-control" name="pw" value={this.state.pw} onChange={this.handleChange} placeholder="Password" />
+              </div>
+              <div className="form-group">
+                <input type="phone" className="form-control" name="phone" value={this.state.phone} onChange={this.handleChange} placeholder="phone" />
+              </div>
+              <button type="submit" className="btn btn-primary">Register</button>
+              <button onClick={() => this.props.__setRoute('login')}> Cancel </button>
+            </form>
+          </Grid>
+        </Grid>
       </div>
     )
   }
