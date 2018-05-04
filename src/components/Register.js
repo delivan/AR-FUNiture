@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { register } from '../action/Auth';
 import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
-import { firebaseAuth } from '../config/firebase'
 
 
 
@@ -35,8 +34,8 @@ class Register extends Component{
         pw: '',
         phone: ''
       });
-      this.props.__setRoute('login');
-      
+      this.props.__setRoute('home');
+      console.log('current user:', firebaseAuth().currentUser)
     }).catch((e)=>{
       alert(e);
     });
