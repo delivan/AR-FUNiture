@@ -11,9 +11,16 @@
   margin-top: 50px;
 }
 
+<<<<<<< HEAD
 .Login {
   margin-top:100px;
 }
+=======
+.Register {
+  margin-top: 100px;
+}
+
+>>>>>>> 8ef4390afb18d6f71a1451ca4af37b98ab381751
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;

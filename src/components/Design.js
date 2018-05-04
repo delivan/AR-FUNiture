@@ -10,13 +10,14 @@ class Design extends Component {
     return (
       <div className="row">
         <div className="col">
-          <DesignCard 
+          <DesignCard
             title={'Modern'}
             content={'깔끔하고 멋진 스타일을 원하신다면'}
             img={'https://i.pinimg.com/originals/b4/dc/03/b4dc03af97cff39564c67d7ffeff24e1.jpg'}
-            __setRoute={this.props.__setRoute} 
+            __setRoute={this.props.__setRoute}
             currentRoute={this.props.currentRoute}
             currentUser={this.props.currentUser}
+            __setCategory={this.props.__setCategory}
           />
         </div>
         <div className="col">
@@ -27,10 +28,11 @@ class Design extends Component {
             __setRoute={this.props.__setRoute}
             currentRoute={this.props.currentRoute}
             currentUser={this.props.currentUser}
+            __setCategory={this.props.__setCategory}
           />
         </div>
         <div className="w-100"></div>
-        
+
       </div>
     )
   }
@@ -40,9 +42,13 @@ class DesignCard extends Component {
   __checklogin = () => {
     console.log(firebaseAuth().currentUser)
     console.log(this.props.currentUser)
-    this.props.currentUser ?
-      this.props.__setRoute('ar') : alert('로그인 해주세요')
-  } 
+    if (this.props.currentUser) {
+      this.props.__setRoute('ar');
+      this.props.__setCategory(this.props.title);
+    } else {
+       alert('로그인 해주세요');
+    }
+  }
 
   render() {
     return (
@@ -70,12 +76,13 @@ DesignCard.propTypes = {
   img: PropTypes.string,
   currentRoute: PropTypes.string,
   __setRoute: PropTypes.func,
-  
+  __setCategory: PropTypes.func,
 }
 
 Design.propTypes = {
   currentRoute: PropTypes.string,
   __setRoute: PropTypes.func,
   currentUser: PropTypes.object,
+  __setCategory: PropTypes.func,
 }
 export default Design;
