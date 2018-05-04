@@ -27,20 +27,15 @@ const styles = theme => ({
   },
 });
 
-const theme = createMuiTheme({
-  primary : red[500]
-})
 
 class MenuAppBar extends Component {
-
-  
 
   render() {
     // console.log('props currentRout',this.props.currentRoute)
     const { classes } = this.props;
 
     return (
-      <MuiThemeProvider theme={theme}>
+      <MuiThemeProvider>
         <div className={classes.root}>
           <AppBar position="static">
             <Toolbar>

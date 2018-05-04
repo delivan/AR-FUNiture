@@ -65,13 +65,7 @@ class App extends Component {
   get currentComponent() {
     const { currentRoute } = this.state;
     console.log('get currentcomponent', currentRoute);
-<<<<<<< HEAD
-    
     switch ( currentRoute) {
-=======
-
-    switch ('in app', currentRoute) {
->>>>>>> 8ef4390afb18d6f71a1451ca4af37b98ab381751
       case 'home':
         return (
           <Home
