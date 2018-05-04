@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { register } from '../action/Auth';
 import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
+import { firebaseAuth } from '../config/firebase'
 
 
 
@@ -27,18 +28,19 @@ class Register extends Component{
 
   handleSubmit = (e) => {
     e.preventDefault()
-    try{
-      register(this.state.email, this.state.pw, this.state.phone);
+    register(this.state.email, this.state.pw, this.state.phone).then(()=>{
+
       this.setState({
         email: '',
         pw: '',
         phone: ''
       });
       this.props.__setRoute('login');
-    }
-    catch(e){
-      alert(e.message);
-    }
+      
+    }).catch((e)=>{
+      alert(e);
+    });
+
     
   }
 
@@ -70,7 +72,7 @@ class Register extends Component{
   }
 }
 
-Register.PropTypes = {  
+Register.propTypes = {  
   currentRoute: PropTypes.string,
   __setRoute: PropTypes.func,
 }

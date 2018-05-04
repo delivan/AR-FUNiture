@@ -13,6 +13,7 @@ export function register (email, pw, phone) {
     return firebaseAuth().createUserWithEmailAndPassword(email, pw).then((user)=>{
         saveUser(user, phone);
     });
+    
 }
 
 export function saveUser (user, phone) {
