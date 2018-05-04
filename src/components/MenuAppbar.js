@@ -14,6 +14,7 @@ import { firebaseAuth } from '../config/firebase'
 import { createMuiTheme } from 'material-ui';
 import red from 'material-ui/colors/red'
 
+// 바꾸고 싶은 스타일로 만들고 컴포넌트에 props로 전달
 const styles = {
   root: {
     flexGrow: 1,
@@ -26,9 +27,6 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
-  menu: {
-    backgroundColor: 'red',
-  }
 };
 
 const theme = createMuiTheme({
