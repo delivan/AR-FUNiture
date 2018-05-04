@@ -78,5 +78,4 @@ Design.propTypes = {
   __setRoute: PropTypes.func,
   currentUser: PropTypes.object,
 }
-
 export default Design;
