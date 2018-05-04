@@ -59,11 +59,11 @@ class DesignCard extends Component {
       //   </div>
       // </div>
       <Card narrow>
-        <CardImage className="img-fluid" src={this.props.img} />
+        <CardImage onClick={() => this.__checklogin} className="img-fluid" src={this.props.img} />
         <CardBody>
-          <CardTitle>{this.props.title}</CardTitle>
+          <CardTitle onClick={() => this.__checklogin}>{this.props.title}</CardTitle>
           <CardText>{this.props.content}</CardText>
-          <Button onClick={this.__checklogin}>Button</Button>
+          {/* <Button onClick={this.__checklogin}>Button</Button> */}
         </CardBody>
       </Card>
     )
