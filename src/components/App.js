@@ -3,10 +3,11 @@ import Home from './Home';
 import Login from './Login';
 import Ar from './Ar';
 import Register from './Register'
-import { Container } from 'mdbreact';
+// import { Container } from 'mdbreact';
 import MenuAppbar from './MenuAppbar';
 import { firebaseAuth } from '../config/firebase';
 import '../css/App.css'
+import YoutubePlayer from 'react-youtube-player';
 
 const styles = {
   app: {
@@ -99,10 +100,10 @@ class App extends Component {
     return (
       <div style={styles.app}>
         {/* Main */}
-        <Container>
+        {/* <Container> */}
           <MenuAppbar __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} currentUser={this.state.currentUser}/>
           {this.currentComponent}
-        </Container>
+        {/* </Container> */}
       </div>
     );
   }

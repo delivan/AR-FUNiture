@@ -62,7 +62,6 @@ class DesignCard extends Component {
       <Card narrow>
         <ButtonBase onClick={this.__checklogin}>
           <CardImage  className="img-fluid" src={this.props.img} />
-        {/* {<img src={this.props.img} */}
         </ButtonBase>
         <CardBody>
           <CardTitle onClick={() => this.__checklogin}>{this.props.title}</CardTitle>
