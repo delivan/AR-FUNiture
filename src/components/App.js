@@ -17,9 +17,14 @@ const categories = ['desk', 'chair', 'bed', 'closet'];
 const theme = createMuiTheme();
 
 class App extends Component {
-  state = {
-    category: null,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      category: null,
+    };
+    this.handleSelectCategory = this.handleSelectCategory.bind(this);
+  }
 
   handleSelectCategory = (category) => {
     this.setState({category});
@@ -27,7 +32,6 @@ class App extends Component {
 
   render() {
     const {category} = this.state;
-    const {handleSelectCategory} = this;
 
     return (<MuiThemeProvider theme={theme}>
       <div style={styles.container}>

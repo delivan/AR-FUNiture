@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {AFrameRenderer, Marker} from 'react-web-ar';
 import Button from 'material-ui/Button';
+import Drawer from './Drawer'
 
 const styles = {
   backButton: {
@@ -8,9 +9,8 @@ const styles = {
     left: '1rem',
     top: '1rem'
   },
-  scaleInput: {
+  drawer: {
     position: 'fixed',
-    display: 'table',
     right: '1rem',
     top: '1rem'
   },
@@ -36,11 +36,11 @@ class Ar extends Component {
       y: 0.01,
       z: 0.01
     };
-
     this.handleScale = this.handleScale.bind(this);
+    this.handleUpdateScale = this.handleUpdateScale.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     const {category} = this.props;
     const id = document.getElementById(category);
     id.setAttribute('scale', {
@@ -50,7 +50,7 @@ class Ar extends Component {
     });
   }
 
-  handleBack() {
+  handleBack = () => {
     window.location.reload();
   }
 
@@ -60,7 +60,7 @@ class Ar extends Component {
     });
   }
 
-  handleSubmit = (e) => {
+  handleUpdateScale = (e) => {
     // 페이지 리로딩 방지
     e.preventDefault();
 
@@ -88,24 +88,14 @@ class Ar extends Component {
         <div style={styles.backButton}>
           <Button onClick={this.handleBack} variant="raised" color="secondary">뒤로가기</Button>
         </div>
-        <form style={styles.scaleInput} onSubmit={this.handleSubmit}>
-          <p>가로 세로 높이를 입력해주세요.</p>
-          <div>
-            <label for="fname">가로:</label>
-            <input onChange={this.handleScale} value={this.state.x} placeholder="x" name="x"/>
-          </div>
-          <div>
-            <label for="lname">세로:</label>
-            <input onChange={this.handleScale} value={this.state.z} placeholder="z" name="z"/>
-          </div>
-          <div>
-            <label for="age">높이:</label>
-            <input onChange={this.handleScale} value={this.state.y} placeholder="y" name="y"/>
-          </div>
-          <div>
-            <button type="submit">적용</button>
-          </div>
-        </form>
+        <div style={styles.drawer}>
+          <Drawer
+            width={this.state.x}
+            length={this.state.z}
+            height={this.state.y}
+            onUpdateScale={this.handleUpdateScale}
+            onHandleScale={this.handleScale}/>
+        </div>
       </AFrameRenderer>
     </div>);
   }
