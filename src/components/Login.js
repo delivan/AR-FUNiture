@@ -49,8 +49,8 @@ export default class Login extends Component {
                 <div className="form-group">
                   <input type="password" className="form-control" name="pw" value={this.state.pw} onChange={this.handleChange} placeholder="Password" />
                 </div>
-                <button type="submit" className="btn btn-primary">Login</button>
-                <button onClick={() => this.props.__setRoute('register')}> Register </button>
+                <button type="submit" className="btn btn-danger">Login</button>
+                <button onClick={() => this.props.__setRoute('register')} className="btn btn-danger"> Register </button>
               </form>
             </Grid>
           <Grid item xs></Grid>

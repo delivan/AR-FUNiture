@@ -3,6 +3,8 @@ import { register } from '../action/Auth';
 import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
 
+
+
 class Register extends Component{
 
 
@@ -25,13 +27,19 @@ class Register extends Component{
 
   handleSubmit = (e) => {
     e.preventDefault()
-    register(this.state.email, this.state.pw, this.state.phone);
-    this.setState({
-      email: '',
-      pw: '',
-      phone: ''
-    })      
-    this.props.__setRoute('login');
+    try{
+      register(this.state.email, this.state.pw, this.state.phone);
+      this.setState({
+        email: '',
+        pw: '',
+        phone: ''
+      });
+      this.props.__setRoute('login');
+    }
+    catch(e){
+      alert(e.message);
+    }
+    
   }
 
 
@@ -52,8 +60,8 @@ class Register extends Component{
               <div className="form-group">
                 <input type="phone" className="form-control" name="phone" value={this.state.phone} onChange={this.handleChange} placeholder="phone" />
               </div>
-              <button type="submit" className="btn btn-primary">Register</button>
-              <button onClick={() => this.props.__setRoute('login')}> Cancel </button>
+              <button type="submit" className="btn btn-danger">Register</button>
+              <button onClick={() => this.props.__setRoute('login')} className="btn btn-danger"> Cancel </button>
             </form>
           </Grid>
         </Grid>
