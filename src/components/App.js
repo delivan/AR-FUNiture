@@ -8,7 +8,6 @@ import Ar from './Ar';
 import Register from './Register'
 import { Container } from 'mdbreact';
 import MenuAppbar from './MenuAppbar';
-import { register } from '../action/Auth';
 import { firebaseAuth } from '../config/firebase';
 
 class App extends Component {
@@ -51,7 +50,7 @@ class App extends Component {
     const { currentRoute } = this.state;
     console.log('get currentcomponent', currentRoute);
     
-    switch ('in app ',currentRoute) {
+    switch ( currentRoute) {
       case 'home':
         return <Home __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} currentUser={this.state.currentUser} />;
       case 'login':

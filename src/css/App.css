@@ -3,10 +3,17 @@
   background-color: white;
 }
 
+.MuiPaper-root-12 MuiPaper-elevation4-18 MuiAppBar-root-4 MuiAppBar-positionStatic-8 MuiAppBar-colorPrimary-10{
+  background-color:#dc3545;
+}
+
 .Introduction {
   margin-top: 50px;
 }
 
+.Login {
+  margin-top:100px;
+}
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;

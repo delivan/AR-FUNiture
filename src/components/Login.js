@@ -38,22 +38,23 @@ export default class Login extends Component {
   render () {
     return (
       <div className='Login'>
-        <Grid item xs={12} sm={3}></Grid>
-        <Grid item xs={12} sm={6}>
-            <h1> Login </h1>
-            <form onSubmit={this.handleSubmit}>
-              <div className="form-group">
-                <input className="form-control" name="email" value={this.state.email} onChange={this.handleChange} placeholder="Email" />
-              </div>
-              <div className="form-group">
-                <input type="password" className="form-control" name="pw" value={this.state.pw} onChange={this.handleChange} placeholder="Password" />
-              </div>
-              <button type="submit" className="btn btn-primary">Login</button>
-              <button onClick={() => this.props.__setRoute('register')}> Register </button>
-            <button onClick={() => this.props.__setRoute('home')}> Cancel </button>
-            </form>
+        <Grid container spacing={24}> 
+          <Grid item xs></Grid>
+            <Grid item xs>
+              <h1> Login </h1>
+              <form onSubmit={this.handleSubmit}>
+                <div className="form-group">
+                  <input className="form-control" name="email" value={this.state.email} onChange={this.handleChange} placeholder="Email" />
+                </div>
+                <div className="form-group">
+                  <input type="password" className="form-control" name="pw" value={this.state.pw} onChange={this.handleChange} placeholder="Password" />
+                </div>
+                <button type="submit" className="btn btn-primary">Login</button>
+                <button onClick={() => this.props.__setRoute('register')}> Register </button>
+              </form>
+            </Grid>
+          <Grid item xs></Grid>
         </Grid>
-        <Grid item xs={12} sm={3}></Grid>
       </div>
     )
   }  
