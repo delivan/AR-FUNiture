@@ -4,6 +4,7 @@ import '../css/Design.css';
 import { Button, Card, CardBody, CardImage, CardTitle, CardText } from 'mdbreact';
 import PropTypes from 'prop-types';
 import { firebaseAuth } from '../config/firebase'
+import ButtonBase from "material-ui/ButtonBase";
 
 class Design extends Component {
   render() {
@@ -59,7 +60,10 @@ class DesignCard extends Component {
       //   </div>
       // </div>
       <Card narrow>
-        <CardImage onClick={() => this.__checklogin} className="img-fluid" src={this.props.img} />
+        <ButtonBase onClick={this.__checklogin}>
+          <CardImage  className="img-fluid" src={this.props.img} />
+        {/* {<img src={this.props.img} */}
+        </ButtonBase>
         <CardBody>
           <CardTitle onClick={() => this.__checklogin}>{this.props.title}</CardTitle>
           <CardText>{this.props.content}</CardText>
