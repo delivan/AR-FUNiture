@@ -6,12 +6,14 @@ import Register from './Register'
 import { Container } from 'mdbreact';
 import MenuAppbar from './MenuAppbar';
 import { firebaseAuth } from '../config/firebase';
+import '../css/App.css'
 
 const styles = {
   app: {
     textAlign: 'center',
     backgroundColor: 'white',
-  }
+    overflowY: 'scroll'
+  },
 }
 
 class App extends Component {
@@ -101,10 +103,6 @@ class App extends Component {
           <MenuAppbar __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} currentUser={this.state.currentUser}/>
           {this.currentComponent}
         </Container>
-
-        <div className="body" style={{overflowY: 'scroll'}}>
-
-        </div>
       </div>
     );
   }
