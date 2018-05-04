@@ -8,7 +8,12 @@ export default class Home extends Component {
     return (
       <div className="container">
         <Introduction />
-        <Design __setRoute={this.props.__setRoute} currentRoute={this.props.currentRoute} currentUser={this.props.currentUser} />
+        <Design
+          __setRoute={this.props.__setRoute}
+          currentRoute={this.props.currentRoute}
+          currentUser={this.props.currentUser}
+          __setCategory={this.props.__setCategory}
+          />
       </div>
     )
   }
@@ -18,4 +23,5 @@ Home.propTypes = {
   currentRoute: PropTypes.string,
   __setRoute: PropTypes.func,
   currentUser: PropTypes.object,
+  __setCategory: PropTypes.func,
 }
