@@ -50,6 +50,7 @@ export default class Login extends Component {
             </div>
             <button type="submit" className="btn btn-primary">Login</button>
             <button onClick={() => this.props.__setRoute('register')}> Register </button>
+          <button onClick={() => this.props.__setRoute('home')}> Cancel </button>
           </form>
       </div>
     )
