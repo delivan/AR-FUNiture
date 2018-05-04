@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import '../css/App.css';
 
 
-import Register from './Register';
 import Home from './Home';
-// import Introduction from './Introduction';
 import Login from './Login';
 import Ar from './Ar';
-
+import Register from './Register'
 import { Container } from 'mdbreact';
 import MenuAppbar from './MenuAppbar';
 import { register } from '../action/Auth';
@@ -69,7 +67,6 @@ class App extends Component {
 
   componentDidMount() {
     firebaseAuth().onAuthStateChanged(currentUser => {
-      console.log('app',currentUser)
       this.setState({currentUser});
     })
   }
@@ -79,7 +76,6 @@ class App extends Component {
       <div className="App">
         
         {/* Main */}
-        {console.log('CCC',this.state.currentUser)}
         <Container>
           <MenuAppbar __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} currentUser={this.state.currentUser}/>
           {this.currentComponent}
