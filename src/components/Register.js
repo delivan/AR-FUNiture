@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { register } from '../action/Auth';
 import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
-
+import { firebaseAuth } from '../config/firebase'
 
 
 class Register extends Component{
@@ -39,8 +39,6 @@ class Register extends Component{
     }).catch((e)=>{
       alert(e);
     });
-
-    
   }
 
 
