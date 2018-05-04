@@ -40,7 +40,7 @@ class MenuAppBar extends Component {
         <div className={classes.root}>
         <AppBar position="static" className={classes.root}>
             <Toolbar>
-              <Typography variant="title" color="inherit" className={classes.flex}>
+              <Typography variant="title" onClick={() => this.props.__setRoute('home')} color="inherit" className={classes.flex} >
                 ArFuniture
               </Typography>
               {this.props.currentUser ? 
