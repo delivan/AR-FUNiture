@@ -7,7 +7,6 @@ import Register from './Register'
 import MenuAppbar from './MenuAppbar';
 import { firebaseAuth } from '../config/firebase';
 import '../css/App.css'
-import YoutubePlayer from 'react-youtube-player';
 
 const styles = {
   app: {

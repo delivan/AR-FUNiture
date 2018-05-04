@@ -13,7 +13,7 @@ export default class Home extends Component {
           currentRoute={this.props.currentRoute}
           currentUser={this.props.currentUser}
           __setCategory={this.props.__setCategory}
-          />
+        />
       </div>
     )
   }

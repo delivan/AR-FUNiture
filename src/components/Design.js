@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import Sample from '../img/designSample.jpg';
 import '../css/Design.css';
-import { Button, Card, CardBody, CardImage, CardTitle, CardText } from 'mdbreact';
+import { Card, CardBody, CardImage, CardTitle, CardText } from 'mdbreact';
 import PropTypes from 'prop-types';
 import { firebaseAuth } from '../config/firebase'
 import ButtonBase from "material-ui/ButtonBase";
