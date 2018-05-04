@@ -14,9 +14,11 @@ import { firebaseAuth } from '../config/firebase'
 import { createMuiTheme } from 'material-ui';
 import red from 'material-ui/colors/red'
 
-const styles = theme => ({
+// 바꾸고 싶은 스타일로 만들고 컴포넌트에 props로 전달
+const styles = {
   root: {
     flexGrow: 1,
+    backgroundColor: '#D32F2F',
   },
   flex: {
     flex: 1,
@@ -25,7 +27,7 @@ const styles = theme => ({
     marginLeft: -12,
     marginRight: 20,
   },
-});
+};
 
 
 class MenuAppBar extends Component {
@@ -35,9 +37,8 @@ class MenuAppBar extends Component {
     const { classes } = this.props;
 
     return (
-      <MuiThemeProvider>
         <div className={classes.root}>
-          <AppBar position="static">
+        <AppBar position="static" className={classes.root}>
             <Toolbar>
               <Typography variant="title" color="inherit" className={classes.flex}>
                 ArFuniture
@@ -51,7 +52,6 @@ class MenuAppBar extends Component {
             </Toolbar>
           </AppBar>
         </div>
-      </MuiThemeProvider>
     );
   }
 }
