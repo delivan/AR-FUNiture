@@ -6,7 +6,6 @@ import Register from './Register'
 // import { Container } from 'mdbreact';
 import MenuAppbar from './MenuAppbar';
 import { firebaseAuth } from '../config/firebase';
-import '../css/App.css'
 
 const styles = {
   app: {

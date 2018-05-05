@@ -41,13 +41,13 @@ class MenuAppBar extends Component {
         <AppBar position="static" className={classes.root}>
             <Toolbar>
               <Typography variant="title" onClick={() => this.props.__setRoute('home')} color="inherit" className={classes.flex} >
-                ArFuniture
+                AR Funiture
               </Typography>
-              {this.props.currentUser ? 
+              {this.props.currentUser ?
                 <BarMenu currentUser={this.props.currentUser} />
-              : 
-                <Button color="inherit" onClick={() => this.props.__setRoute('login')}>Login</Button>  
-                
+              :
+                <Button color="inherit" onClick={() => this.props.__setRoute('login')}>Login</Button>
+
               }
             </Toolbar>
           </AppBar>
@@ -76,7 +76,7 @@ class BarMenu extends Component {
   }
 
   render() {
-    
+
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 

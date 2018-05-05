@@ -4,6 +4,7 @@ import Button from 'material-ui/Button';
 import PropTypes from 'prop-types';
 import Drawer from './Drawer';
 import Furnitures from './Furnitures';
+import {ref} from '../config/firebase';
 
 const styles = {
   leftButton: {
@@ -25,17 +26,27 @@ const styles = {
     position: 'fixed',
     right: '1rem',
     top: '1rem'
-  },
+  }
 };
 
 const moderns = [
-  { idx: 0, path: process.env.PUBLIC_URL + '/models/desk1/scene.gltf'},
-  { idx: 1, path: process.env.PUBLIC_URL + '/models/chair1/scene.gltf'}
+  {
+    idx: 0,
+    path: process.env.PUBLIC_URL + '/models/desk1/scene.gltf'
+  }, {
+    idx: 1,
+    path: process.env.PUBLIC_URL + '/models/chair1/scene.gltf'
+  }
 ]
 
 const colorful = [
-  { idx: 0, path: process.env.PUBLIC_URL + '/models/bed1/scene.gltf'},
-  { idx: 1, path: process.env.PUBLIC_URL + '/models/closet1/scene.gltf'}
+  {
+    idx: 0,
+    path: process.env.PUBLIC_URL + '/models/bed1/scene.gltf'
+  }, {
+    idx: 1,
+    path: process.env.PUBLIC_URL + '/models/closet1/scene.gltf'
+  }
 ]
 
 class Ar extends Component {
@@ -46,7 +57,7 @@ class Ar extends Component {
       x: 0.01,
       y: 0.01,
       z: 0.01,
-      currentIdx: 0,
+      currentIdx: 0
     };
     this.handleScale = this.handleScale.bind(this);
     this.handleUpdateScale = this.handleUpdateScale.bind(this);
@@ -60,6 +71,7 @@ class Ar extends Component {
       y: this.state.y,
       z: this.state.z
     });
+    console.log(ref);
   }
 
   handleLeft = () => {
@@ -67,8 +79,7 @@ class Ar extends Component {
       this.setState({
         currentIdx: moderns.length - 1
       });
-    }
-    else {
+    } else {
       this.setState({
         currentIdx: this.state.currentIdx - 1
       });
@@ -77,11 +88,8 @@ class Ar extends Component {
 
   handleRight = () => {
     if (this.state.currentIdx === moderns.length - 1) {
-      this.setState({
-        currentIdx: 0
-      });
-    }
-    else {
+      this.setState({currentIdx: 0});
+    } else {
       this.setState({
         currentIdx: this.state.currentIdx + 1
       });
@@ -117,7 +125,8 @@ class Ar extends Component {
     return (<div style={styles.renderer}>
       <AFrameRenderer>
         <Marker parameters={{
-            preset: 'hiro'
+            type: 'pattern',
+            patternUrl: process.env.PUBLIC_URL + '/f.patt'
           }}>
           {category === 'modern' && <Furnitures category={category} currentIdx={currentIdx} furnitures={moderns}/>}
           {category === 'colorful' && <Furnitures category={category} currentIdx={currentIdx} furnitures={colorful}/>}
@@ -132,12 +141,7 @@ class Ar extends Component {
           <Button onClick={this.handleBack} variant="raised" color="secondary">뒤로가기</Button>
         </div>
         <div style={styles.drawer}>
-          <Drawer
-            width={this.state.x}
-            length={this.state.z}
-            height={this.state.y}
-            onUpdateScale={this.handleUpdateScale}
-            onHandleScale={this.handleScale}/>
+          <Drawer width={this.state.x} length={this.state.z} height={this.state.y} onUpdateScale={this.handleUpdateScale} onHandleScale={this.handleScale}/>
         </div>
       </AFrameRenderer>
     </div>);
@@ -147,7 +151,7 @@ class Ar extends Component {
 Ar.propTypes = {
   category: PropTypes.string,
   currentRoute: PropTypes.string,
-  __setRoute: PropTypes.func,
+  __setRoute: PropTypes.func
 }
 
 export default Ar;

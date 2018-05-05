@@ -11,23 +11,22 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from 'material-ui/transitions/Collapse';
 import TextField from 'material-ui/TextField';
 
-
 const styles = theme => ({
   list: {
-    width: 'auto',
+    width: 'auto'
   },
   scaleInput: {
     display: 'flex',
     flexDirection: 'column',
     marginTop: theme.spacing.unit * 2,
     marginLeft: theme.spacing.unit * 2,
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing.unit * 2
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 200,
-  },
+    width: 100
+  }
 });
 
 class TemporaryDrawer extends Component {
@@ -56,7 +55,9 @@ class TemporaryDrawer extends Component {
   }
 
   handleSizeButton() {
-    this.setState({ open: !this.state.open });
+    this.setState({
+      open: !this.state.open
+    });
   }
 
   render() {
@@ -72,42 +73,23 @@ class TemporaryDrawer extends Component {
             </ListItemIcon>
             <ListItemText primary="즐겨찾기"/>
           </ListItem>
-          <ListItem button onClick={this.handleSizeButton}>
+          <ListItem button="button" onClick={this.handleSizeButton}>
             <ListItemIcon>
               <InboxIcon/>
             </ListItemIcon>
-            <ListItemText primary="크기조정"/>
-            {this.state.open ? <ExpandLess /> : <ExpandMore />}
+            <ListItemText primary="크기조정"/> {
+              this.state.open
+                ? <ExpandLess/>
+                : <ExpandMore/>
+            }
           </ListItem>
-          <Collapse in={this.state.open} timeout="auto" unmountOnExit>
-              <form onSubmit={this.updateScale} className={classes.scaleInput}>
-                  가로 세로 높이를 입력해주세요.
-                  <TextField
-                    name="x"
-                    label="가로"
-                    value={this.props.width}
-                    onChange={this.handleScale}
-                    margin="normal"
-                    className={classes.textField}
-                  />
-                  <TextField
-                    name="z"
-                    label="세로"
-                    value={this.props.length}
-                    onChange={this.handleScale}
-                    margin="normal"
-                    className={classes.textField}
-                  />
-                  <TextField
-                    id="y"
-                    label="높이"
-                    value={this.props.height}
-                    onChange={this.handleScale}
-                    margin="normal"
-                    className={classes.textField}
-                  />
-                  <Button type="submit" variant="raised" color="secondary">적용</Button>
-              </form>
+          <Collapse in={this.state.open} timeout="auto" unmountOnExit="unmountOnExit">
+            <form onSubmit={this.updateScale} className={classes.scaleInput}>
+              <TextField name="x" label="가로" value={this.props.width} onChange={this.handleScale} margin="normal" className={classes.textField}/>
+              <TextField name="z" label="세로" value={this.props.length} onChange={this.handleScale} margin="normal" className={classes.textField}/>
+              <TextField id="y" label="높이" value={this.props.height} onChange={this.handleScale} margin="normal" className={classes.textField}/>
+              <Button type="submit" variant="raised" color="secondary" onClick={this.toggleDrawer('right', false)}>적용</Button>
+            </form>
           </Collapse>
         </div>
       </Drawer>
