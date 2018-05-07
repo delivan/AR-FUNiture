@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {AFrameRenderer, Marker} from 'react-web-ar';
 import Button from 'material-ui/Button';
+import StarIcon from '@material-ui/icons/Star';
 import PropTypes from 'prop-types';
 import Drawer from './Drawer';
 import Furnitures from './Furnitures';
-import {ref} from '../config/firebase';
+import {databaseRef, firebaseAuth} from '../config/firebase';
 
 const styles = {
   leftButton: {
@@ -20,7 +21,12 @@ const styles = {
   backButton: {
     position: 'fixed',
     left: '1rem',
-    top: '1rem'
+    top: '2rem'
+  },
+  bookmarkButton: {
+    position: 'fixed',
+    left: '1rem',
+    bottom: '1rem'
   },
   drawer: {
     position: 'fixed',
@@ -29,23 +35,23 @@ const styles = {
   }
 };
 
-const moderns = [
+const modern = [
   {
     idx: 0,
-    path: process.env.PUBLIC_URL + '/models/desk1/scene.gltf'
+    path: process.env.PUBLIC_URL + '/models/modern/pillow/scene.gltf'
   }, {
     idx: 1,
-    path: process.env.PUBLIC_URL + '/models/chair1/scene.gltf'
+    path: process.env.PUBLIC_URL + '/models/modern/chair/scene.gltf'
   }
 ]
 
 const colorful = [
   {
     idx: 0,
-    path: process.env.PUBLIC_URL + '/models/bed1/scene.gltf'
+    path: process.env.PUBLIC_URL + '/models/colorful/desk/scene.gltf'
   }, {
     idx: 1,
-    path: process.env.PUBLIC_URL + '/models/closet1/scene.gltf'
+    path: process.env.PUBLIC_URL + '/models/colorful/closet/scene.gltf'
   }
 ]
 
@@ -59,6 +65,10 @@ class Ar extends Component {
       z: 0.01,
       currentIdx: 0
     };
+    this.handleLeft = this.handleLeft.bind(this);
+    this.handleRight = this.handleRight.bind(this);
+    this.handleBack = this.handleBack.bind(this);
+    this.handleBookmark = this.handleBookmark.bind(this);
     this.handleScale = this.handleScale.bind(this);
     this.handleUpdateScale = this.handleUpdateScale.bind(this);
   }
@@ -71,13 +81,12 @@ class Ar extends Component {
       y: this.state.y,
       z: this.state.z
     });
-    console.log(ref);
   }
 
   handleLeft = () => {
     if (this.state.currentIdx === 0) {
       this.setState({
-        currentIdx: moderns.length - 1
+        currentIdx: modern.length - 1
       });
     } else {
       this.setState({
@@ -87,7 +96,7 @@ class Ar extends Component {
   }
 
   handleRight = () => {
-    if (this.state.currentIdx === moderns.length - 1) {
+    if (this.state.currentIdx === modern.length - 1) {
       this.setState({currentIdx: 0});
     } else {
       this.setState({
@@ -98,6 +107,19 @@ class Ar extends Component {
 
   handleBack = () => {
     window.location.reload();
+  }
+
+  handleBookmark = (url) => {
+    var bookmarkData = {
+      path: url
+    };
+
+    var bookmarkRef = databaseRef.child('users/' + firebaseAuth().currentUser.uid + '/bookmark')
+    var bookmarkKey = bookmarkRef.push().key;
+    console.log(bookmarkKey);
+    var updates = {};
+    updates[bookmarkKey] = bookmarkData;
+    bookmarkRef.update(updates);
   }
 
   handleScale = (e) => {
@@ -117,6 +139,7 @@ class Ar extends Component {
       y: this.state.y,
       z: this.state.z
     });
+
   }
 
   render() {
@@ -125,10 +148,9 @@ class Ar extends Component {
     return (<div style={styles.renderer}>
       <AFrameRenderer>
         <Marker parameters={{
-            type: 'pattern',
-            patternUrl: process.env.PUBLIC_URL + '/f.patt'
+            preset: 'hiro',
           }}>
-          {category === 'modern' && <Furnitures category={category} currentIdx={currentIdx} furnitures={moderns}/>}
+          {category === 'modern' && <Furnitures category={category} currentIdx={currentIdx} furnitures={modern}/>}
           {category === 'colorful' && <Furnitures category={category} currentIdx={currentIdx} furnitures={colorful}/>}
         </Marker>
         <div style={styles.leftButton}>
@@ -139,6 +161,9 @@ class Ar extends Component {
         </div>
         <div style={styles.backButton}>
           <Button onClick={this.handleBack} variant="raised" color="secondary">뒤로가기</Button>
+        </div>
+        <div style={styles.bookmarkButton}>
+          <Button onClick={() => this.handleBookmark(modern[currentIdx].path)} variant="fab" color="secondary"><StarIcon/></Button>
         </div>
         <div style={styles.drawer}>
           <Drawer width={this.state.x} length={this.state.z} height={this.state.y} onUpdateScale={this.handleUpdateScale} onHandleScale={this.handleScale}/>

@@ -1,4 +1,4 @@
-import { ref, firebaseAuth } from '../config/firebase'
+import { databaseRef, firebaseAuth } from '../config/firebase'
 
 
 /*--------------------------
@@ -13,11 +13,11 @@ export function register (email, pw, phone) {
     return firebaseAuth().createUserWithEmailAndPassword(email, pw).then((user)=>{
         saveUser(user, phone);
     });
-    
+
 }
 
 export function saveUser (user, phone) {
-    return ref.child(`users/${user.uid}/info`).set({
+    return databaseRef.child(`users/${user.uid}/info`).set({
             email: user.email,
             uid: user.uid,
             phone: phone

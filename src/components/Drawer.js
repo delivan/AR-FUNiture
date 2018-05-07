@@ -10,6 +10,8 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from 'material-ui/transitions/Collapse';
 import TextField from 'material-ui/TextField';
+import {databaseRef, firebaseAuth} from '../config/firebase';
+
 
 const styles = theme => ({
   list: {
@@ -25,7 +27,7 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 100
+    width: 150
   }
 });
 
@@ -34,12 +36,15 @@ class TemporaryDrawer extends Component {
     super(props);
     this.state = {
       right: false,
-      open: false
+      sizeOpen: false,
+      bookmarkOpen: false,
+      bookmarkPath: []
     };
+    this.toggleDrawer = this.toggleDrawer.bind(this);
     this.handleScale = this.handleScale.bind(this);
     this.updateScale = this.updateScale.bind(this);
     this.handleSizeButton = this.handleSizeButton.bind(this);
-
+    this.handleBookmarkButton = this.handleBookmarkButton.bind(this);
   }
 
   toggleDrawer = (side, open) => () => {
@@ -56,7 +61,23 @@ class TemporaryDrawer extends Component {
 
   handleSizeButton() {
     this.setState({
-      open: !this.state.open
+      sizeOpen: !this.state.sizeOpen
+    });
+  }
+
+  handleBookmarkButton() {
+    var bookmarkRef = databaseRef.child('users/' + firebaseAuth().currentUser.uid + '/bookmark');
+    bookmarkRef.on('value', (snapshot) => {
+      var value = snapshot.val();
+      var paths = [];
+      var idx = 0;
+      for (var key in value) {
+        paths[idx++] = value[key].path;
+      }
+      this.setState({
+        bookmarkPath: paths,
+        bookmarkOpen: !this.state.bookmarkOpen
+      });
     });
   }
 
@@ -67,30 +88,39 @@ class TemporaryDrawer extends Component {
       <Button onClick={this.toggleDrawer('right', true)} variant="raised" color="secondary">메뉴</Button>
       <Drawer anchor="right" open={this.state.right} onClose={this.toggleDrawer('right', false)}>
         <div className={classes.list}>
-          <ListItem button="button">
+          <ListItem button onClick={this.handleBookmarkButton}>
             <ListItemIcon>
               <StarIcon/>
             </ListItemIcon>
-            <ListItemText primary="즐겨찾기"/>
-          </ListItem>
-          <ListItem button="button" onClick={this.handleSizeButton}>
-            <ListItemIcon>
-              <InboxIcon/>
-            </ListItemIcon>
-            <ListItemText primary="크기조정"/> {
-              this.state.open
+            <ListItemText primary="즐겨찾기"/> {
+              this.state.bookmarkOpen
                 ? <ExpandLess/>
                 : <ExpandMore/>
             }
-          </ListItem>
-          <Collapse in={this.state.open} timeout="auto" unmountOnExit="unmountOnExit">
-            <form onSubmit={this.updateScale} className={classes.scaleInput}>
-              <TextField name="x" label="가로" value={this.props.width} onChange={this.handleScale} margin="normal" className={classes.textField}/>
-              <TextField name="z" label="세로" value={this.props.length} onChange={this.handleScale} margin="normal" className={classes.textField}/>
-              <TextField id="y" label="높이" value={this.props.height} onChange={this.handleScale} margin="normal" className={classes.textField}/>
-              <Button type="submit" variant="raised" color="secondary" onClick={this.toggleDrawer('right', false)}>적용</Button>
-            </form>
-          </Collapse>
+            <Collapse in={this.state.bookmarkOpen} timeout="auto" unmountOnExit="unmountOnExit">
+              <div>
+                bookmark: {this.state.bookmarkPath}
+              </div>
+            </Collapse>
+            </ListItem>
+            <ListItem button onClick={this.handleSizeButton}>
+              <ListItemIcon>
+                <InboxIcon/>
+              </ListItemIcon>
+            <ListItemText primary="크기조정"/> {
+              this.state.sizeOpen
+                ? <ExpandLess/>
+                : <ExpandMore/>
+            }
+            </ListItem>
+            <Collapse in={this.state.sizeOpen} timeout="auto" unmountOnExit="unmountOnExit">
+              <form onSubmit={this.updateScale} className={classes.scaleInput}>
+                <TextField name="x" label="가로" value={this.props.width} onChange={this.handleScale} margin="normal" className={classes.textField}/>
+                <TextField name="z" label="세로" value={this.props.length} onChange={this.handleScale} margin="normal" className={classes.textField}/>
+                <TextField name="y" label="높이" value={this.props.height} onChange={this.handleScale} margin="normal" className={classes.textField}/>
+                <Button type="submit" variant="raised" color="secondary" onClick={this.toggleDrawer('right', false)}>적용</Button>
+              </form>
+            </Collapse>
         </div>
       </Drawer>
     </div>);
