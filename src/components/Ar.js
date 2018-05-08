@@ -21,7 +21,7 @@ const styles = {
   backButton: {
     position: 'fixed',
     left: '1rem',
-    top: '2rem'
+    top: '1rem'
   },
   bookmarkButton: {
     position: 'fixed',
