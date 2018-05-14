@@ -3,6 +3,9 @@ import { Media } from 'mdbreact';
 import YouTube from 'react-youtube';
 
 
+const style = {}
+
+
 class Introduction extends Component {
   _onReady(event) {
     // access to player in all event handlers via event.target
@@ -23,29 +26,33 @@ class Introduction extends Component {
     }
     //gUwieWcISDU
     return (
-      <div className="Introduction">
-        <div className="Introduction__Youtube">
+      <div className="Introduction" >
+        
+        <div className="Introduction__Youtube col-s-12">
           <h1>Hello Funiture</h1>
-          <YouTube
+          {/* <YouTube
             videoId="gUwieWcISDU"
             opts={opts}
             onReady={this._onReady}
             onEnd={this._onEnd}
-          />         
+          />          */}
+          <iframe width="854" height="480" src="https://www.youtube.com/embed/J_CFBjAyPWE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
+        
         <div className="Introduction__Colums">
           <h1>Use Funiture!!</h1>
           
           <Media>
             <Media body>
               <Media heading>STEP 1</Media>
-              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                가구를 놓을 자리에 Hiro 마크를 놓아주세요.
+                아래의 원하는 디자인 카드를 선택해주세요.
             </Media>
           </Media>
           <Media>
             <Media body>
               <Media heading>STEP 2</Media>
-              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                카메라가 켜진 이후에 카메라 화면을 Hiro 마크 위에 올려두세요.
             </Media>
           </Media>      
         </div>

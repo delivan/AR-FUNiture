@@ -11,7 +11,13 @@
     <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
     <script src="%PUBLIC_URL%/ar.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   </head>
+  <script type="text/javascript">
+    $(window).resize(function(){resizeYoutube();});
+    $(function(){resizeYoutube();});
+    function resizeYoutube(){ $("iframe").each(function(){ if( /^https?:\/\/www.youtube.com\/embed\//g.test($(this).attr("src")) ){ $(this).css("width","100%"); $(this).css("height",Math.ceil( parseInt($(this).css("width")) * 480 / 854 ) + "px");} }); }
+  </script>
   <body>
     <div id="root"></div>
   </body>
