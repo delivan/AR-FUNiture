@@ -7,7 +7,6 @@ import { firebaseAuth } from '../config/firebase'
 
 class Register extends Component{
 
-
   constructor(props){
     super(props);
     this.state = {
@@ -69,7 +68,7 @@ class Register extends Component{
   }
 }
 
-Register.propTypes = {  
+Register.propTypes = {
   currentRoute: PropTypes.string,
   __setRoute: PropTypes.func,
 }

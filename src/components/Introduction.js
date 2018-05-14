@@ -29,7 +29,6 @@ class Introduction extends Component {
           <YouTube
             videoId="gUwieWcISDU"
             opts={opts}
-            className="video-iframe"
             onReady={this._onReady}
             onEnd={this._onEnd}
           />         
