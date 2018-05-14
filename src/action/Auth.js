@@ -5,7 +5,6 @@ import { databaseRef, firebaseAuth } from '../config/firebase'
 
 Login, Logout, Register Function
 
-
 ----------------------------*/
 
 

@@ -38,20 +38,26 @@ const styles = {
 const modern = [
   {
     idx: 0,
-    path: process.env.PUBLIC_URL + '/models/modern/pillow/scene.gltf'
-  }, {
+    path: process.env.PUBLIC_URL + '/models/modern/pillow/scene.gltf',
+    scale: '0.01 0.01 0.01'
+  },
+  {
     idx: 1,
-    path: process.env.PUBLIC_URL + '/models/modern/chair/scene.gltf'
+    path: process.env.PUBLIC_URL + '/models/modern/chair/scene.gltf',
+    scale: '0.01 0.01 0.01'
   }
 ]
 
 const colorful = [
   {
     idx: 0,
-    path: process.env.PUBLIC_URL + '/models/colorful/desk/scene.gltf'
-  }, {
+    path: process.env.PUBLIC_URL + '/models/colorful/desk/scene.gltf',
+    scale: '0.02 0.02 0.02'
+  },
+  {
     idx: 1,
-    path: process.env.PUBLIC_URL + '/models/colorful/closet/scene.gltf'
+    path: process.env.PUBLIC_URL + '/models/colorful/closet/scene.gltf',
+    scale: '0.02 0.02 0.02'
   }
 ]
 
@@ -60,9 +66,9 @@ class Ar extends Component {
     super(props);
 
     this.state = {
-      x: 0.01,
-      y: 0.01,
-      z: 0.01,
+      x: 1,
+      y: 1,
+      z: 1,
       currentIdx: 0
     };
     this.handleLeft = this.handleLeft.bind(this);
@@ -74,13 +80,13 @@ class Ar extends Component {
   }
 
   componentDidMount = () => {
-    const {category} = this.props;
-    const id = document.getElementById(category);
-    id.setAttribute('scale', {
-      x: this.state.x,
-      y: this.state.y,
-      z: this.state.z
-    });
+    // const {category} = this.props;
+    // const id = document.getElementById(category);
+    // id.setAttribute('scale', {
+    //   x: this.state.x,
+    //   y: this.state.y,
+    //   z: this.state.z
+    // });
   }
 
   handleLeft = () => {
@@ -110,13 +116,14 @@ class Ar extends Component {
   }
 
   handleBookmark = (url) => {
-    var bookmarkData = {
-      path: url
-    };
+    var canvas = document.querySelector('a-scene').components.screenshot.getCanvas('perspective');
 
     var bookmarkRef = databaseRef.child('users/' + firebaseAuth().currentUser.uid + '/bookmark')
     var bookmarkKey = bookmarkRef.push().key;
-    console.log(bookmarkKey);
+    var bookmarkData = {
+      key: bookmarkKey,
+      url: canvas.toDataURL("image/png").replace("image/png", "image/octet-stream")
+    };
     var updates = {};
     updates[bookmarkKey] = bookmarkData;
     bookmarkRef.update(updates);
@@ -129,16 +136,16 @@ class Ar extends Component {
   }
 
   handleUpdateScale = (e) => {
-    // 페이지 리로딩 방지
-    e.preventDefault();
-
-    const {category} = this.props;
-    const id = document.getElementById(category);
-    id.setAttribute('scale', {
-      x: this.state.x,
-      y: this.state.y,
-      z: this.state.z
-    });
+    // // 페이지 리로딩 방지
+    // e.preventDefault();
+    //
+    // const {category} = this.props;
+    // const id = document.getElementById(category);
+    // id.setAttribute('scale', {
+    //   x: this.state.x,
+    //   y: this.state.y,
+    //   z: this.state.z
+    // });
 
   }
 

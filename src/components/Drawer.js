@@ -4,6 +4,9 @@ import {withStyles} from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
 import Button from 'material-ui/Button';
 import {ListItem, ListItemIcon, ListItemText} from 'material-ui/List';
+import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
+import IconButton from 'material-ui/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import StarIcon from '@material-ui/icons/Star';
 import ExpandLess from '@material-ui/icons/ExpandLess';
@@ -17,6 +20,11 @@ const styles = theme => ({
   list: {
     width: 'auto'
   },
+  bookmarkList: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
   scaleInput: {
     display: 'flex',
     flexDirection: 'column',
@@ -28,7 +36,16 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: 150
-  }
+  },
+  gridList: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 300,
+    height: 'auto',
+  },
+  icon: {
+    color: 'rgba(255, 255, 255, 0.54)',
+  },
 });
 
 class TemporaryDrawer extends Component {
@@ -38,7 +55,7 @@ class TemporaryDrawer extends Component {
       right: false,
       sizeOpen: false,
       bookmarkOpen: false,
-      bookmarkPath: []
+      bookmarks: []
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
     this.handleScale = this.handleScale.bind(this);
@@ -47,6 +64,16 @@ class TemporaryDrawer extends Component {
     this.handleBookmarkButton = this.handleBookmarkButton.bind(this);
   }
 
+  componentDidMount = () => {
+    var bookmarkRef = databaseRef.child('users/' + firebaseAuth().currentUser.uid + '/bookmark');
+    bookmarkRef.on('value', (snapshot) => {
+      var value = snapshot.val();
+      this.setState({
+        bookmarks: value,
+      });
+    });
+  }
+  
   toggleDrawer = (side, open) => () => {
     this.setState({[side]: open});
   };
@@ -66,23 +93,14 @@ class TemporaryDrawer extends Component {
   }
 
   handleBookmarkButton() {
-    var bookmarkRef = databaseRef.child('users/' + firebaseAuth().currentUser.uid + '/bookmark');
-    bookmarkRef.on('value', (snapshot) => {
-      var value = snapshot.val();
-      var paths = [];
-      var idx = 0;
-      for (var key in value) {
-        paths[idx++] = value[key].path;
-      }
-      this.setState({
-        bookmarkPath: paths,
-        bookmarkOpen: !this.state.bookmarkOpen
-      });
+    this.setState({
+      bookmarkOpen: !this.state.bookmarkOpen
     });
   }
 
   render() {
     const {classes} = this.props;
+    const {bookmarks} = this.state;
 
     return (<div>
       <Button onClick={this.toggleDrawer('right', true)} variant="raised" color="secondary">메뉴</Button>
@@ -97,12 +115,26 @@ class TemporaryDrawer extends Component {
                 ? <ExpandLess/>
                 : <ExpandMore/>
             }
+            </ListItem>
             <Collapse in={this.state.bookmarkOpen} timeout="auto" unmountOnExit="unmountOnExit">
-              <div>
-                bookmark: {this.state.bookmarkPath}
+              <div className={classes.bookmarkList}>
+                <GridList cellHeight={130} className={classes.gridList}>
+                  {Object.keys(bookmarks).map(key => (
+                    <GridListTile key={bookmarks[key].key}>
+                      <img src={bookmarks[key].url} alt={'test'}/>
+                      <GridListTileBar
+                        title={<span>by: {'hyuk'}</span>}
+                        actionIcon={
+                          <IconButton className={classes.icon}>
+                            <DeleteIcon />
+                          </IconButton>
+                        }
+                      />
+                    </GridListTile>
+                  ))}
+                </GridList>
               </div>
             </Collapse>
-            </ListItem>
             <ListItem button onClick={this.handleSizeButton}>
               <ListItemIcon>
                 <InboxIcon/>

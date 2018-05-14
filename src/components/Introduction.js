@@ -29,9 +29,9 @@ class Introduction extends Component {
             onReady={this._onReady}
           />
           <Media>
-            // <Media left className="mr-3" href="#">
-            //   <Media object src="https://placehold.it/64x64" alt="Generic placeholder image" />
-            // </Media>
+            <Media left className="mr-3" href="#">
+              <Media object src="https://placehold.it/64x64" alt="Generic placeholder image" />
+            </Media>
             <Media body>
               <Media heading>STEP 1</Media>
               Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
