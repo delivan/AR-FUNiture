@@ -7,9 +7,6 @@
   background-color:#dc3545;
 }
 
-.Introduction {
-  margin-top: 50px;
-}
 
 .Login {
   margin-top:100px;
@@ -23,8 +20,9 @@
 
 .Introduction {
   position: relative;
-  overflow: hidden;
-  padding-top: 56.25%;
+    overflow: hidden;
+    padding-top: 56.25%;
+    margin-top: 50px;
 }
 
   .Introduction__Youtube {
