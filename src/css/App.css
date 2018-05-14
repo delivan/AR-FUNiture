@@ -20,13 +20,14 @@
 
 .Introduction {
   position: relative;
-    overflow: hidden;
-    padding-top: 56.25%;
-    margin-top: 50px;
+  overflow: hidden;
+  padding-top: 56.25%;
+  margin-top: 50px;
 }
 
-  .Introduction__Youtube {
+.Introduction__Youtube {
   position: absolute;
+  margin:0 auto;
   top: 0;
   left: 0;
   width: 100%;

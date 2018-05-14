@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Home from './Home';
 import Login from './Login';
 import Ar from './Ar';
@@ -6,6 +6,8 @@ import Register from './Register'
 // import { Container } from 'mdbreact';
 import MenuAppbar from './MenuAppbar';
 import { firebaseAuth } from '../config/firebase';
+import "../css/App.css"
+
 
 const styles = {
   app: {
@@ -70,27 +72,48 @@ class App extends Component {
     switch ( currentRoute) {
       case 'home':
         return (
-          <Home
-            __setRoute={this.__setRoute}
-            currentRoute={this.state.currentRoute}
-            currentUser={this.state.currentUser}
-            __setCategory={this.__setCategory}
-          />
+          <div>
+            <MenuAppbar __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} currentUser={this.state.currentUser}/>
+            <Home
+              __setRoute={this.__setRoute}
+              currentRoute={this.state.currentRoute}
+              currentUser={this.state.currentUser}
+              __setCategory={this.__setCategory}
+            />
+          </div>
       );
       case 'login':
-        return <Login __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} currentUser={this.state.currentUser} />
+        return ( 
+          <div>
+            <MenuAppbar __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} currentUser={this.state.currentUser}/>
+            <Login __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} currentUser={this.state.currentUser} />
+          </div>
+        )
       case 'register':
-        return <Register __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} />
+        return (
+          <div>
+            <MenuAppbar __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} currentUser={this.state.currentUser}/>
+            <Register __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} />
+          </div>
+        )
       case 'ar':
-        return <Ar __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} category={this.state.category}/>
+        return (
+          <div>
+            <MenuAppbar __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} currentUser={this.state.currentUser}/>
+            <Ar __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} category={this.state.category}/>
+          </div>
+          )
       default:
         return (
+          <div>
+          <MenuAppbar __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} currentUser={this.state.currentUser}/>
           <Home
             __setRoute={this.__setRoute}
             currentRoute={this.state.currentRoute}
             currentUser={this.state.currentUser}
             __setCategory={this.__setCategory}
           />
+          </div>
       );
     }
   }
@@ -100,7 +123,7 @@ class App extends Component {
       <div style={styles.app}>
         {/* Main */}
         {/* <Container> */}
-          <MenuAppbar __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} currentUser={this.state.currentUser}/>
+          
           {this.currentComponent}
         {/* </Container> */}
       </div>
