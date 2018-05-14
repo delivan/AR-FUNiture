@@ -29,7 +29,6 @@ class Introduction extends Component {
       <div className="Introduction" >
         
         <div className="Introduction__Youtube col-s-12">
-          <h1>Hello Funiture</h1>
           {/* <YouTube
             videoId="gUwieWcISDU"
             opts={opts}
@@ -45,14 +44,13 @@ class Introduction extends Component {
           <Media>
             <Media body>
               <Media heading>STEP 1</Media>
-                가구를 놓을 자리에 Hiro 마크를 놓아주세요.
-                아래의 원하는 디자인 카드를 선택해주세요.
+              Place the Hiro mark in the desired position. Please select the design card below.
             </Media>
           </Media>
           <Media>
             <Media body>
               <Media heading>STEP 2</Media>
-                카메라가 켜진 이후에 카메라 화면을 Hiro 마크 위에 올려두세요.
+                Keep the camera screen on the Hiro mark after the camera is turned on.
             </Media>
           </Media>      
         </div>
