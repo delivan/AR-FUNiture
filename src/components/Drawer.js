@@ -15,7 +15,6 @@ import Collapse from 'material-ui/transitions/Collapse';
 import TextField from 'material-ui/TextField';
 import {databaseRef, firebaseAuth} from '../config/firebase';
 
-
 const styles = theme => ({
   list: {
     width: 'auto'
@@ -52,7 +51,7 @@ class TemporaryDrawer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      right: false,
+      menuOpen: false,
       sizeOpen: false,
       bookmarkOpen: false,
       bookmarks: []
@@ -62,6 +61,8 @@ class TemporaryDrawer extends Component {
     this.updateScale = this.updateScale.bind(this);
     this.handleSizeButton = this.handleSizeButton.bind(this);
     this.handleBookmarkButton = this.handleBookmarkButton.bind(this);
+    this.selectBookmark = this.selectBookmark.bind(this);
+    this.deleteBookmark = this.deleteBookmark.bind(this);
   }
 
   componentDidMount = () => {
@@ -73,9 +74,11 @@ class TemporaryDrawer extends Component {
       });
     });
   }
-  
-  toggleDrawer = (side, open) => () => {
-    this.setState({[side]: open});
+
+  toggleDrawer = () => {
+    this.setState({
+      menuOpen: !this.state.menuOpen
+    });
   };
 
   updateScale = (e) => {
@@ -98,15 +101,24 @@ class TemporaryDrawer extends Component {
     });
   }
 
+  selectBookmark(idx) {
+    this.props.onSelectBookmark(idx);
+  } 
+
+  deleteBookmark(key) {
+    var bookmarkRef = databaseRef.child('users/' + firebaseAuth().currentUser.uid + '/bookmark')
+    bookmarkRef.child(key).remove();
+  }
+
   render() {
     const {classes} = this.props;
     const {bookmarks} = this.state;
 
     return (<div>
-      <Button onClick={this.toggleDrawer('right', true)} variant="raised" color="secondary">메뉴</Button>
-      <Drawer anchor="right" open={this.state.right} onClose={this.toggleDrawer('right', false)}>
+      <Button onClick={this.toggleDrawer} variant="raised" color="secondary">메뉴</Button>
+      <Drawer anchor="right" open={this.state.menuOpen} onClose={this.toggleDrawer}>
         <div className={classes.list}>
-          <ListItem button onClick={this.handleBookmarkButton}>
+          <ListItem role="button" onClick={this.handleBookmarkButton}>
             <ListItemIcon>
               <StarIcon/>
             </ListItemIcon>
@@ -116,26 +128,26 @@ class TemporaryDrawer extends Component {
                 : <ExpandMore/>
             }
             </ListItem>
-            <Collapse in={this.state.bookmarkOpen} timeout="auto" unmountOnExit="unmountOnExit">
+            <Collapse in={this.state.bookmarkOpen} timeout="auto" unmountOnExit>
               <div className={classes.bookmarkList}>
                 <GridList cellHeight={130} className={classes.gridList}>
-                  {Object.keys(bookmarks).map(key => (
-                    <GridListTile key={bookmarks[key].key}>
+                  {bookmarks !== null ? Object.keys(bookmarks).map(key => (
+                    <GridListTile onClick={() => this.selectBookmark(bookmarks[key].idx)} key={bookmarks[key].key}>
                       <img src={bookmarks[key].url} alt={'test'}/>
                       <GridListTileBar
                         title={<span>by: {'hyuk'}</span>}
                         actionIcon={
-                          <IconButton className={classes.icon}>
+                          <IconButton className={classes.icon} onClick={() => this.deleteBookmark(bookmarks[key].key)}>
                             <DeleteIcon />
                           </IconButton>
                         }
                       />
                     </GridListTile>
-                  ))}
+                  )) : 'hi'}
                 </GridList>
               </div>
             </Collapse>
-            <ListItem button onClick={this.handleSizeButton}>
+            <ListItem role="button" onClick={this.handleSizeButton}>
               <ListItemIcon>
                 <InboxIcon/>
               </ListItemIcon>
@@ -145,12 +157,12 @@ class TemporaryDrawer extends Component {
                 : <ExpandMore/>
             }
             </ListItem>
-            <Collapse in={this.state.sizeOpen} timeout="auto" unmountOnExit="unmountOnExit">
+            <Collapse in={this.state.sizeOpen} timeout="auto" unmountOnExit>
               <form onSubmit={this.updateScale} className={classes.scaleInput}>
                 <TextField name="x" label="가로" value={this.props.width} onChange={this.handleScale} margin="normal" className={classes.textField}/>
                 <TextField name="z" label="세로" value={this.props.length} onChange={this.handleScale} margin="normal" className={classes.textField}/>
                 <TextField name="y" label="높이" value={this.props.height} onChange={this.handleScale} margin="normal" className={classes.textField}/>
-                <Button type="submit" variant="raised" color="secondary" onClick={this.toggleDrawer('right', false)}>적용</Button>
+                <Button type="submit" variant="raised" color="secondary" onClick={this.toggleDrawer}>적용</Button>
               </form>
             </Collapse>
         </div>

@@ -115,13 +115,14 @@ class Ar extends Component {
     window.location.reload();
   }
 
-  handleBookmark = (url) => {
+  handleBookmark = (idx, url) => {
     var canvas = document.querySelector('a-scene').components.screenshot.getCanvas('perspective');
 
     var bookmarkRef = databaseRef.child('users/' + firebaseAuth().currentUser.uid + '/bookmark')
     var bookmarkKey = bookmarkRef.push().key;
     var bookmarkData = {
       key: bookmarkKey,
+      idx: idx,
       url: canvas.toDataURL("image/png").replace("image/png", "image/octet-stream")
     };
     var updates = {};
@@ -132,6 +133,12 @@ class Ar extends Component {
   handleScale = (e) => {
     this.setState({
       [e.target.name]: e.target.value
+    });
+  }
+
+  showBookmark = (idx) => {
+    this.setState({
+      currentIdx: idx
     });
   }
 
@@ -170,10 +177,10 @@ class Ar extends Component {
           <Button onClick={this.handleBack} variant="raised" color="secondary">뒤로가기</Button>
         </div>
         <div style={styles.bookmarkButton}>
-          <Button onClick={() => this.handleBookmark(modern[currentIdx].path)} variant="fab" color="secondary"><StarIcon/></Button>
+          <Button onClick={() => this.handleBookmark(currentIdx, modern[currentIdx].path)} variant="fab" color="secondary"><StarIcon/></Button>
         </div>
         <div style={styles.drawer}>
-          <Drawer width={this.state.x} length={this.state.z} height={this.state.y} onUpdateScale={this.handleUpdateScale} onHandleScale={this.handleScale}/>
+          <Drawer width={this.state.x} length={this.state.z} height={this.state.y} onUpdateScale={this.handleUpdateScale} onHandleScale={this.handleScale} onSelectBookmark={this.showBookmark}/>
         </div>
       </AFrameRenderer>
     </div>);
