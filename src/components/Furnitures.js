@@ -5,7 +5,7 @@ class Furnitures extends Component {
     const { category, currentIdx, furnitures } = this.props;
 
     return (
-      <a-gltf-model src={furnitures[currentIdx].path} id={category} scale={furnitures[currentIdx].scale}></a-gltf-model>
+      <a-gltf-model src={furnitures[currentIdx].path} id={category}></a-gltf-model>
     );
   }
 }

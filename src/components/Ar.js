@@ -66,9 +66,9 @@ class Ar extends Component {
     super(props);
 
     this.state = {
-      x: 1,
-      y: 1,
-      z: 1,
+      x: 0.01,
+      y: 0.01,
+      z: 0.01,
       currentIdx: 0
     };
     this.handleLeft = this.handleLeft.bind(this);
@@ -80,13 +80,13 @@ class Ar extends Component {
   }
 
   componentDidMount = () => {
-    // const {category} = this.props;
-    // const id = document.getElementById(category);
-    // id.setAttribute('scale', {
-    //   x: this.state.x,
-    //   y: this.state.y,
-    //   z: this.state.z
-    // });
+    const {category} = this.props;
+    const id = document.getElementById(category);
+    id.setAttribute('scale', {
+      x: this.state.x,
+      y: this.state.y,
+      z: this.state.z
+    });
   }
 
   handleLeft = () => {
@@ -143,17 +143,16 @@ class Ar extends Component {
   }
 
   handleUpdateScale = (e) => {
-    // // 페이지 리로딩 방지
-    // e.preventDefault();
-    //
-    // const {category} = this.props;
-    // const id = document.getElementById(category);
-    // id.setAttribute('scale', {
-    //   x: this.state.x,
-    //   y: this.state.y,
-    //   z: this.state.z
-    // });
-
+    // 페이지 리로딩 방지
+    e.preventDefault();
+    
+    const {category} = this.props;
+    const id = document.getElementById(category);
+    id.setAttribute('scale', {
+      x: this.state.x,
+      y: this.state.y,
+      z: this.state.z
+    });
   }
 
   render() {

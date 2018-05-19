@@ -36,6 +36,13 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
     width: 150
   },
+  sizeField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    marginTop : theme.spacing.unit,
+    marginBottom : theme.spacing.unit,
+    width: 150
+  },
   gridList: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
@@ -110,6 +117,11 @@ class TemporaryDrawer extends Component {
     bookmarkRef.child(key).remove();
   }
 
+  anotherUpdateScale = (e) => {
+    this.props.onHandleScale(e);
+    this.props.onUpdateScale(e);
+  }
+
   render() {
     const {classes} = this.props;
     const {bookmarks} = this.state;
@@ -162,6 +174,36 @@ class TemporaryDrawer extends Component {
                 <TextField name="x" label="가로" value={this.props.width} onChange={this.handleScale} margin="normal" className={classes.textField}/>
                 <TextField name="z" label="세로" value={this.props.length} onChange={this.handleScale} margin="normal" className={classes.textField}/>
                 <TextField name="y" label="높이" value={this.props.height} onChange={this.handleScale} margin="normal" className={classes.textField}/>
+                가로 :<input
+                  name="x"
+                  type="range"
+                  onChange={this.anotherUpdateScale}
+                  min="0.01"
+                  max="0.02"
+                  step="0.001"
+                  defaultValue={this.props.width}
+                  className={classes.sizeField}
+                />
+                세로 :<input
+                  name="z"
+                  type="range"
+                  onChange={this.anotherUpdateScale}
+                  min="0.01"
+                  max="0.02"
+                  step="0.001"
+                  defaultValue={this.props.length}
+                  className={classes.sizeField}
+                />
+                높이 :<input
+                  name="y"
+                  type="range"
+                  onChange={this.anotherUpdateScale}
+                  min="0.01"
+                  max="0.02"
+                  step="0.001"
+                  defaultValue={this.props.height}
+                  className={classes.sizeField}
+                />
                 <Button type="submit" variant="raised" color="secondary" onClick={this.toggleDrawer}>적용</Button>
               </form>
             </Collapse>
