@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import '../css/Design.css';
 import { Card, CardBody, CardImage, CardTitle, CardText } from 'mdbreact';
 import PropTypes from 'prop-types';
-import { firebaseAuth } from '../config/firebase'
 import ButtonBase from "material-ui/ButtonBase";
 
 class Design extends Component {
@@ -41,8 +40,6 @@ class Design extends Component {
 
 class DesignCard extends Component {
   __checklogin = () => {
-    console.log(firebaseAuth().currentUser)
-    console.log(this.props.currentUser)
     if (this.props.currentUser) {
       this.props.__setRoute('ar');
       this.props.__setCategory(this.props.title);

@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
 import { Media } from 'mdbreact';
-import YouTube from 'react-youtube';
-
-
-const style = {}
-
 
 class Introduction extends Component {
   _onReady(event) {
@@ -17,13 +12,13 @@ class Introduction extends Component {
   }
 
   render() {
-    const opts = {
-      height: '390',
-      width: '640',
-      playerVars: {
-        autoplay: 1
-      }
-    }
+    // const opts = {
+    //   height: '390',
+    //   width: '640',
+    //   playerVars: {
+    //     autoplay: 1
+    //   }
+    // }
     //gUwieWcISDU
     return (
       <div className="Introduction" >
@@ -35,7 +30,7 @@ class Introduction extends Component {
             onReady={this._onReady}
             onEnd={this._onEnd}
           />          */}
-          <iframe width="854" height="480" src="https://www.youtube.com/embed/J_CFBjAyPWE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          <iframe title="intro" width="854" height="480" src="https://www.youtube.com/embed/J_CFBjAyPWE" frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
         </div>
         
         <div className="Introduction__Colums">

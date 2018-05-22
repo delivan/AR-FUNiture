@@ -1,13 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import Home from './Home';
 import Login from './Login';
 import Ar from './Ar';
 import Register from './Register'
-// import { Container } from 'mdbreact';
 import MenuAppbar from './MenuAppbar';
 import { firebaseAuth } from '../config/firebase';
 import "../css/App.css"
-
 
 const styles = {
   app: {
@@ -54,7 +52,6 @@ class App extends Component {
   }
 
   onClick() {
-    
     this.setState({
       collapse: !this.state.collapse,
     });
@@ -68,7 +65,6 @@ class App extends Component {
 
   get currentComponent() {
     const { currentRoute } = this.state;
-    console.log('get currentcomponent', currentRoute);
     switch ( currentRoute) {
       case 'home':
         return (
@@ -99,20 +95,19 @@ class App extends Component {
       case 'ar':
         return (
           <div>
-            <MenuAppbar __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} currentUser={this.state.currentUser}/>
             <Ar __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} category={this.state.category}/>
           </div>
           )
       default:
         return (
           <div>
-          <MenuAppbar __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} currentUser={this.state.currentUser}/>
-          <Home
-            __setRoute={this.__setRoute}
-            currentRoute={this.state.currentRoute}
-            currentUser={this.state.currentUser}
-            __setCategory={this.__setCategory}
-          />
+            <MenuAppbar __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} currentUser={this.state.currentUser}/>
+            <Home
+              __setRoute={this.__setRoute}
+              currentRoute={this.state.currentRoute}
+              currentUser={this.state.currentUser}
+              __setCategory={this.__setCategory}
+            />
           </div>
       );
     }
@@ -121,11 +116,7 @@ class App extends Component {
   render() {
     return (
       <div style={styles.app}>
-        {/* Main */}
-        {/* <Container> */}
-          
           {this.currentComponent}
-        {/* </Container> */}
       </div>
     );
   }

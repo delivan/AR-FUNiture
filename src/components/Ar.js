@@ -8,6 +8,9 @@ import Furnitures from './Furnitures';
 import {databaseRef, firebaseAuth} from '../config/firebase';
 
 const styles = {
+  renderer: {
+    overflow: 'hidden'
+  },
   leftButton: {
     position: 'fixed',
     left: '1rem',
@@ -94,7 +97,8 @@ class Ar extends Component {
       this.setState({
         currentIdx: modern.length - 1
       });
-    } else {
+    } 
+    else {
       this.setState({
         currentIdx: this.state.currentIdx - 1
       });
@@ -104,7 +108,8 @@ class Ar extends Component {
   handleRight = () => {
     if (this.state.currentIdx === modern.length - 1) {
       this.setState({currentIdx: 0});
-    } else {
+    } 
+    else {
       this.setState({
         currentIdx: this.state.currentIdx + 1
       });
@@ -116,14 +121,16 @@ class Ar extends Component {
   }
 
   handleBookmark = (idx, url) => {
-    var canvas = document.querySelector('a-scene').components.screenshot.getCanvas('perspective');
+    var screenshot = document.querySelector('a-scene').components.screenshot;
+    screenshot.resize(256, 256);
+    var canvas = screenshot.getCanvas('perspective');
 
     var bookmarkRef = databaseRef.child('users/' + firebaseAuth().currentUser.uid + '/bookmark')
     var bookmarkKey = bookmarkRef.push().key;
     var bookmarkData = {
       key: bookmarkKey,
       idx: idx,
-      url: canvas.toDataURL("image/png").replace("image/png", "image/octet-stream")
+      url: canvas.toDataURL("image/png")
     };
     var updates = {};
     updates[bookmarkKey] = bookmarkData;
@@ -163,8 +170,8 @@ class Ar extends Component {
         <Marker parameters={{
             preset: 'hiro',
           }}>
-          {category === 'modern' && <Furnitures category={category} currentIdx={currentIdx} furnitures={modern}/>}
-          {category === 'colorful' && <Furnitures category={category} currentIdx={currentIdx} furnitures={colorful}/>}
+          {category === 'modern' &&  <a-gltf-model src={modern[currentIdx].path} id={category}/>}
+          {category === 'colorful' &&  <a-gltf-model src={colorful[currentIdx].path} id={category}/>}
         </Marker>
         <div style={styles.leftButton}>
           <Button onClick={this.handleLeft} variant="fab">&lt;</Button>

@@ -12,7 +12,6 @@ import StarIcon from '@material-ui/icons/Star';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from 'material-ui/transitions/Collapse';
-import TextField from 'material-ui/TextField';
 import {databaseRef, firebaseAuth} from '../config/firebase';
 
 const styles = theme => ({
@@ -31,16 +30,11 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit * 2,
     marginRight: theme.spacing.unit * 2
   },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 150
-  },
   sizeField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    marginTop : theme.spacing.unit,
-    marginBottom : theme.spacing.unit,
+    marginLeft: theme.spacing.unit * 2,
+    marginRight: theme.spacing.unit * 2,
+    marginTop : theme.spacing.unit * 2,
+    marginBottom : theme.spacing.unit * 2,
     width: 150
   },
   gridList: {
@@ -49,8 +43,11 @@ const styles = theme => ({
     width: 300,
     height: 'auto',
   },
+  listBar: {
+    background: 'rgba(255, 255, 255, 1)'
+  },
   icon: {
-    color: 'rgba(255, 255, 255, 0.54)',
+    color: 'rgba(0, 0, 0, 0.7)',
   },
 });
 
@@ -147,12 +144,12 @@ class TemporaryDrawer extends Component {
                     <GridListTile onClick={() => this.selectBookmark(bookmarks[key].idx)} key={bookmarks[key].key}>
                       <img src={bookmarks[key].url} alt={'test'}/>
                       <GridListTileBar
-                        title={<span>by: {'hyuk'}</span>}
                         actionIcon={
                           <IconButton className={classes.icon} onClick={() => this.deleteBookmark(bookmarks[key].key)}>
                             <DeleteIcon />
                           </IconButton>
                         }
+                        className={classes.listBar}
                       />
                     </GridListTile>
                   )) : 'hi'}
@@ -170,10 +167,7 @@ class TemporaryDrawer extends Component {
             }
             </ListItem>
             <Collapse in={this.state.sizeOpen} timeout="auto" unmountOnExit>
-              <form onSubmit={this.updateScale} className={classes.scaleInput}>
-                <TextField name="x" label="가로" value={this.props.width} onChange={this.handleScale} margin="normal" className={classes.textField}/>
-                <TextField name="z" label="세로" value={this.props.length} onChange={this.handleScale} margin="normal" className={classes.textField}/>
-                <TextField name="y" label="높이" value={this.props.height} onChange={this.handleScale} margin="normal" className={classes.textField}/>
+              <div className={classes.sizeField}>
                 가로 :<input
                   name="x"
                   type="range"
@@ -204,8 +198,7 @@ class TemporaryDrawer extends Component {
                   defaultValue={this.props.height}
                   className={classes.sizeField}
                 />
-                <Button type="submit" variant="raised" color="secondary" onClick={this.toggleDrawer}>적용</Button>
-              </form>
+              </div>
             </Collapse>
         </div>
       </Drawer>

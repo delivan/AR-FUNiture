@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles} from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-// import Switch from 'material-ui/Switch';
-// import { FormControlLabel, FormGroup } from 'material-ui/Form';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Button from 'material-ui/Button';
 import { firebaseAuth } from '../config/firebase'
-
 
 // 바꾸고 싶은 스타일로 만들고 컴포넌트에 props로 전달
 const styles = {
@@ -32,12 +29,10 @@ const styles = {
 class MenuAppBar extends Component {
 
   render() {
-    // console.log('props currentRout',this.props.currentRoute)
     const { classes } = this.props;
 
     return (
         <div className={classes.root}>
-        {console.log('menuAppbar currentUser: ',this.props.currentUser)}
         <AppBar position="static" className={classes.root}>
             <Toolbar>
               <Typography variant="title" onClick={() => this.props.__setRoute('home')} color="inherit" className={classes.flex} >
@@ -47,7 +42,6 @@ class MenuAppBar extends Component {
                 <BarMenu currentUser={this.props.currentUser} />
               :
                 <Button color="inherit" onClick={() => this.props.__setRoute('login')}>Login</Button>
-
               }
             </Toolbar>
           </AppBar>
