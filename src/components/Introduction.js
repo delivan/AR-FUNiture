@@ -34,7 +34,7 @@ class Introduction extends Component {
         </div>
         
         <div className="Introduction__Colums">
-          <h1>Use Funiture!!</h1>
+          <h1>FUNiture 체험</h1>
           
           <Media>
             <Media body>
