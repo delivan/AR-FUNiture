@@ -51,6 +51,32 @@ const styles = theme => ({
   },
 });
 
+const modern = [
+  {
+    idx: 0,
+    path: process.env.PUBLIC_URL + '/models/modern/pillow/scene.gltf',
+    scale: '0.01 0.01 0.01'
+  },
+  {
+    idx: 1,
+    path: process.env.PUBLIC_URL + '/models/modern/chair/scene.gltf',
+    scale: '0.01 0.01 0.01'
+  }
+]
+
+const colorful = [
+  {
+    idx: 0,
+    path: process.env.PUBLIC_URL + '/models/colorful/desk/scene.gltf',
+    scale: '0.02 0.02 0.02'
+  },
+  {
+    idx: 1,
+    path: process.env.PUBLIC_URL + '/models/colorful/closet/scene.gltf',
+    scale: '0.02 0.02 0.02'
+  }
+]
+
 class TemporaryDrawer extends Component {
   constructor(props) {
     super(props);
@@ -58,10 +84,10 @@ class TemporaryDrawer extends Component {
       menuOpen: false,
       sizeOpen: false,
       bookmarkOpen: false,
-      bookmarks: []
+      bookmarks: [],
+      defaultScale: this.props.scale.split(' ')
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
-    this.handleScale = this.handleScale.bind(this);
     this.updateScale = this.updateScale.bind(this);
     this.handleSizeButton = this.handleSizeButton.bind(this);
     this.handleBookmarkButton = this.handleBookmarkButton.bind(this);
@@ -69,7 +95,7 @@ class TemporaryDrawer extends Component {
     this.deleteBookmark = this.deleteBookmark.bind(this);
   }
 
-  componentDidMount = () => {
+  componentDidMount = () => {    
     var bookmarkRef = databaseRef.child('users/' + firebaseAuth().currentUser.uid + '/bookmark');
     bookmarkRef.on('value', (snapshot) => {
       var value = snapshot.val();
@@ -86,10 +112,6 @@ class TemporaryDrawer extends Component {
   };
 
   updateScale = (e) => {
-    this.props.onUpdateScale(e);
-  }
-
-  handleScale = (e) => {
     this.props.onHandleScale(e);
   }
 
@@ -105,8 +127,13 @@ class TemporaryDrawer extends Component {
     });
   }
 
-  selectBookmark(idx) {
-    this.props.onSelectBookmark(idx);
+  selectBookmark(category, idx) {
+    this.props.onSelectBookmark(category, idx);
+    this.setState({
+      defaultScale: category === 'modern' ? modern[idx].scale.split(' ') : colorful[idx].scale.split(' ')
+    });
+    console.log(this.state.defaultScale)
+    this.toggleDrawer();
   } 
 
   deleteBookmark(key) {
@@ -116,12 +143,11 @@ class TemporaryDrawer extends Component {
 
   anotherUpdateScale = (e) => {
     this.props.onHandleScale(e);
-    this.props.onUpdateScale(e);
   }
 
   render() {
     const {classes} = this.props;
-    const {bookmarks} = this.state;
+    const {bookmarks, defaultScale} = this.state;
 
     return (<div>
       <Button onClick={this.toggleDrawer} variant="raised" color="secondary">메뉴</Button>
@@ -141,7 +167,7 @@ class TemporaryDrawer extends Component {
               <div className={classes.bookmarkList}>
                 <GridList cellHeight={130} className={classes.gridList}>
                   {bookmarks !== null ? Object.keys(bookmarks).map(key => (
-                    <GridListTile onClick={() => this.selectBookmark(bookmarks[key].idx)} key={bookmarks[key].key}>
+                    <GridListTile onClick={() => this.selectBookmark(bookmarks[key].category, bookmarks[key].idx)} key={bookmarks[key].key}>
                       <img src={bookmarks[key].url} alt={'test'}/>
                       <GridListTileBar
                         actionIcon={
@@ -171,31 +197,31 @@ class TemporaryDrawer extends Component {
                 가로 :<input
                   name="x"
                   type="range"
-                  onChange={this.anotherUpdateScale}
-                  min="0.01"
-                  max="0.02"
-                  step="0.001"
-                  defaultValue={this.props.width}
+                  onChange={this.updateScale}
+                  min={defaultScale[0] / 2}
+                  max={defaultScale[0] * 2}
+                  step={defaultScale[0] / 10}
+                  defaultValue={defaultScale[0]}
                   className={classes.sizeField}
                 />
                 세로 :<input
                   name="z"
                   type="range"
-                  onChange={this.anotherUpdateScale}
-                  min="0.01"
-                  max="0.02"
-                  step="0.001"
-                  defaultValue={this.props.length}
+                  onChange={this.updateScale}
+                  min={defaultScale[2] / 2}
+                  max={defaultScale[2] * 2}
+                  step={defaultScale[2]  / 10}
+                  defaultValue={defaultScale[0]}
                   className={classes.sizeField}
                 />
                 높이 :<input
                   name="y"
                   type="range"
-                  onChange={this.anotherUpdateScale}
-                  min="0.01"
-                  max="0.02"
-                  step="0.001"
-                  defaultValue={this.props.height}
+                  onChange={this.updateScale}
+                  min={defaultScale[1] / 2}
+                  max={defaultScale[1] * 2}
+                  step={defaultScale[1] / 10}
+                  defaultValue={defaultScale[1]}
                   className={classes.sizeField}
                 />
               </div>
@@ -207,7 +233,10 @@ class TemporaryDrawer extends Component {
 }
 
 TemporaryDrawer.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  scale: PropTypes.string,
+  onHandleScale: PropTypes.func,
+  onSelectBookmark: PropTypes.func
 };
 
 export default withStyles(styles)(TemporaryDrawer);

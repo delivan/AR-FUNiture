@@ -69,27 +69,15 @@ class Ar extends Component {
     super(props);
 
     this.state = {
-      x: 0.01,
-      y: 0.01,
-      z: 0.01,
-      currentIdx: 0
+      currentCategory: this.props.category,
+      currentIdx: 0,
+      scale: this.props.category === 'modern' ? modern[0].scale : colorful[0].scale,
     };
     this.handleLeft = this.handleLeft.bind(this);
     this.handleRight = this.handleRight.bind(this);
     this.handleBack = this.handleBack.bind(this);
     this.handleBookmark = this.handleBookmark.bind(this);
     this.handleScale = this.handleScale.bind(this);
-    this.handleUpdateScale = this.handleUpdateScale.bind(this);
-  }
-
-  componentDidMount = () => {
-    const {category} = this.props;
-    const id = document.getElementById(category);
-    id.setAttribute('scale', {
-      x: this.state.x,
-      y: this.state.y,
-      z: this.state.z
-    });
   }
 
   handleLeft = () => {
@@ -121,6 +109,8 @@ class Ar extends Component {
   }
 
   handleBookmark = (idx, url) => {
+    const {currentCategory} = this.state;
+
     var screenshot = document.querySelector('a-scene').components.screenshot;
     screenshot.resize(256, 256);
     var canvas = screenshot.getCanvas('perspective');
@@ -129,6 +119,7 @@ class Ar extends Component {
     var bookmarkKey = bookmarkRef.push().key;
     var bookmarkData = {
       key: bookmarkKey,
+      category: currentCategory,
       idx: idx,
       url: canvas.toDataURL("image/png")
     };
@@ -137,41 +128,50 @@ class Ar extends Component {
     bookmarkRef.update(updates);
   }
 
+  showBookmark = (category, idx) => {
+    this.setState({
+      currentCategory: category,
+      currentIdx: idx,
+    });  
+  }
+
   handleScale = (e) => {
+    // 페이지 리로딩 방지
+    e.preventDefault();
     this.setState({
       [e.target.name]: e.target.value
     });
-  }
-
-  showBookmark = (idx) => {
-    this.setState({
-      currentIdx: idx
-    });
-  }
-
-  handleUpdateScale = (e) => {
-    // 페이지 리로딩 방지
-    e.preventDefault();
     
-    const {category} = this.props;
-    const id = document.getElementById(category);
-    id.setAttribute('scale', {
-      x: this.state.x,
-      y: this.state.y,
-      z: this.state.z
-    });
+    const {currentCategory} = this.state;
+    const id = document.getElementById(currentCategory);
+    switch ([e.target.name][0]) {
+      case 'x':
+        id.object3D.scale.x = e.target.value;
+        break;
+      case 'y':
+        id.object3D.scale.y = e.target.value;
+        break;
+      case 'z':
+        id.object3D.scale.z = e.target.value;
+        break;
+      default:
+        break;
+    }
   }
 
   render() {
-    const {category} = this.props;
-    const {currentIdx} = this.state;
+    const {currentIdx, currentCategory} = this.state;
     return (<div style={styles.renderer}>
       <AFrameRenderer>
         <Marker parameters={{
             preset: 'hiro',
           }}>
-          {category === 'modern' &&  <a-gltf-model src={modern[currentIdx].path} id={category}/>}
-          {category === 'colorful' &&  <a-gltf-model src={colorful[currentIdx].path} id={category}/>}
+          <a-gltf-model 
+            src={currentCategory === 'modern' ? modern[currentIdx].path : colorful[currentIdx].path} 
+            id={currentCategory} 
+            scale={currentCategory === 'modern' ? modern[currentIdx].scale : colorful[currentIdx].scale}
+          />
+          
         </Marker>
         <div style={styles.leftButton}>
           <Button onClick={this.handleLeft} variant="fab">&lt;</Button>
@@ -186,7 +186,11 @@ class Ar extends Component {
           <Button onClick={() => this.handleBookmark(currentIdx, modern[currentIdx].path)} variant="fab" color="secondary"><StarIcon/></Button>
         </div>
         <div style={styles.drawer}>
-          <Drawer width={this.state.x} length={this.state.z} height={this.state.y} onUpdateScale={this.handleUpdateScale} onHandleScale={this.handleScale} onSelectBookmark={this.showBookmark}/>
+          <Drawer 
+            scale={currentCategory === 'modern' ? modern[currentIdx].scale : colorful[currentIdx].scale}
+            onHandleScale={this.handleScale} 
+            onSelectBookmark={this.showBookmark}
+          />
         </div>
       </AFrameRenderer>
     </div>);
@@ -195,6 +199,7 @@ class Ar extends Component {
 
 Ar.propTypes = {
   category: PropTypes.string,
+  __setCategory: PropTypes.func,
   currentRoute: PropTypes.string,
   __setRoute: PropTypes.func
 }

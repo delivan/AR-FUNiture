@@ -95,7 +95,7 @@ class App extends Component {
       case 'ar':
         return (
           <div>
-            <Ar __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} category={this.state.category}/>
+            <Ar __setRoute={this.__setRoute} currentRoute={this.state.currentRoute} __setCategory={this.__setCategory} category={this.state.category}/>
           </div>
           )
       default:
