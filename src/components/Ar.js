@@ -42,12 +42,12 @@ const modern = [
   {
     idx: 0,
     path: process.env.PUBLIC_URL + '/models/modern/pillow/scene.gltf',
-    scale: '0.01 0.01 0.01'
+    scale: '0.02 0.02 0.02'
   },
   {
     idx: 1,
     path: process.env.PUBLIC_URL + '/models/modern/chair/scene.gltf',
-    scale: '0.01 0.01 0.01'
+    scale: '0.02 0.02 0.02'
   }
 ]
 
@@ -55,12 +55,12 @@ const colorful = [
   {
     idx: 0,
     path: process.env.PUBLIC_URL + '/models/colorful/desk/scene.gltf',
-    scale: '0.02 0.02 0.02'
+    scale: '0.03 0.03 0.03'
   },
   {
     idx: 1,
     path: process.env.PUBLIC_URL + '/models/colorful/closet/scene.gltf',
-    scale: '0.02 0.02 0.02'
+    scale: '0.03 0.03 0.03'
   }
 ]
 
@@ -71,7 +71,7 @@ class Ar extends Component {
     this.state = {
       currentCategory: this.props.category,
       currentIdx: 0,
-      scale: this.props.category === 'modern' ? modern[0].scale : colorful[0].scale,
+      defaultScale: this.props.category === 'modern' ? modern[0].scale : colorful[0].scale,
     };
     this.handleLeft = this.handleLeft.bind(this);
     this.handleRight = this.handleRight.bind(this);
@@ -81,6 +81,7 @@ class Ar extends Component {
   }
 
   handleLeft = () => {
+    const { currentCategory, currentIdx, defaultScale } = this.state;
     if (this.state.currentIdx === 0) {
       this.setState({
         currentIdx: modern.length - 1
@@ -91,24 +92,43 @@ class Ar extends Component {
         currentIdx: this.state.currentIdx - 1
       });
     }
+    this.setState({
+      defaultScale: currentCategory === 'modern' ? modern[currentIdx].scale : colorful[currentIdx].scale,
+    });
+    const id = document.getElementById(currentCategory);
+    var scale_arr = defaultScale.split(' ');
+    id.object3D.scale.x = scale_arr[0];
+    id.object3D.scale.y = scale_arr[1];
+    id.object3D.scale.z = scale_arr[2];
   }
 
   handleRight = () => {
+    const { currentCategory, currentIdx, defaultScale } = this.state;
     if (this.state.currentIdx === modern.length - 1) {
-      this.setState({currentIdx: 0});
+      this.setState({
+        currentIdx: 0,
+      });
     } 
     else {
       this.setState({
-        currentIdx: this.state.currentIdx + 1
+        currentIdx: this.state.currentIdx + 1,
       });
     }
+    this.setState({
+      defaultScale: currentCategory === 'modern' ? modern[currentIdx].scale : colorful[currentIdx].scale,
+    });
+    const id = document.getElementById(currentCategory);
+    var scale_arr = defaultScale.split(' ');
+    id.object3D.scale.x = scale_arr[0];
+    id.object3D.scale.y = scale_arr[1];
+    id.object3D.scale.z = scale_arr[2];
   }
 
   handleBack = () => {
     window.location.reload();
   }
 
-  handleBookmark = (idx, url) => {
+  handleBookmark = (idx, url, scale) => {
     const {currentCategory} = this.state;
 
     var screenshot = document.querySelector('a-scene').components.screenshot;
@@ -121,6 +141,7 @@ class Ar extends Component {
       key: bookmarkKey,
       category: currentCategory,
       idx: idx,
+      scale: scale,
       url: canvas.toDataURL("image/png")
     };
     var updates = {};
@@ -128,11 +149,18 @@ class Ar extends Component {
     bookmarkRef.update(updates);
   }
 
-  showBookmark = (category, idx) => {
-    this.setState({
-      currentCategory: category,
-      currentIdx: idx,
-    });  
+  showBookmark = (category, idx, scale) => {
+    this.setState({currentCategory: category}, () => { 
+      this.setState({
+        currentIdx: idx,
+        defaultScale: scale
+      });
+    });
+    const id = document.getElementById(this.state.currentCategory);
+    var scale_arr = this.state.defaultScale.split(' ');
+    id.object3D.scale.x = scale_arr[0];
+    id.object3D.scale.y = scale_arr[1];
+    id.object3D.scale.z = scale_arr[2];
   }
 
   handleScale = (e) => {
@@ -160,18 +188,14 @@ class Ar extends Component {
   }
 
   render() {
-    const {currentIdx, currentCategory} = this.state;
+    const {currentIdx, currentCategory, defaultScale} = this.state;
     return (<div style={styles.renderer}>
       <AFrameRenderer>
         <Marker parameters={{
             preset: 'hiro',
           }}>
-          <a-gltf-model 
-            src={currentCategory === 'modern' ? modern[currentIdx].path : colorful[currentIdx].path} 
-            id={currentCategory} 
-            scale={currentCategory === 'modern' ? modern[currentIdx].scale : colorful[currentIdx].scale}
-          />
-          
+          {currentCategory === 'modern' && <a-gltf-model src={modern[currentIdx].path} id={currentCategory} scale={defaultScale}/>}
+          {currentCategory === 'colorful' && <a-gltf-model src={colorful[currentIdx].path} id={currentCategory} scale={defaultScale}/>}
         </Marker>
         <div style={styles.leftButton}>
           <Button onClick={this.handleLeft} variant="fab">&lt;</Button>
@@ -183,11 +207,11 @@ class Ar extends Component {
           <Button onClick={this.handleBack} variant="raised" color="secondary">뒤로가기</Button>
         </div>
         <div style={styles.bookmarkButton}>
-          <Button onClick={() => this.handleBookmark(currentIdx, modern[currentIdx].path)} variant="fab" color="secondary"><StarIcon/></Button>
+          <Button onClick={() => this.handleBookmark(currentIdx, modern[currentIdx].path, defaultScale)} variant="fab" color="secondary"><StarIcon/></Button>
         </div>
         <div style={styles.drawer}>
           <Drawer 
-            scale={currentCategory === 'modern' ? modern[currentIdx].scale : colorful[currentIdx].scale}
+            scale={defaultScale}
             onHandleScale={this.handleScale} 
             onSelectBookmark={this.showBookmark}
           />

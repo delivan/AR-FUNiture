@@ -25,7 +25,6 @@ const styles = {
   },
 };
 
-
 class MenuAppBar extends Component {
 
   render() {
