@@ -12,7 +12,7 @@ class Design extends Component {
         <div className="col">
           <DesignCard
             title={'modern'}
-            content={'깔끔하고 멋진 스타일을 원하신다면'}
+            content={'현대적인 스타일을 원하신다면'}
             img={'https://i.pinimg.com/originals/b4/dc/03/b4dc03af97cff39564c67d7ffeff24e1.jpg'}
             __setRoute={this.props.__setRoute}
             currentRoute={this.props.currentRoute}
@@ -22,8 +22,8 @@ class Design extends Component {
         </div>
         <div className="col">
           <DesignCard
-            title={'colorful'}
-            content={'세련되고 멋진 컬러감'}
+            title={'wooden'}
+            content={'앤티크한 스타일을 원하신다면'}
             img={'http://info.pipa.co.kr/files/attach/images/176/158/012/99c06980f1118765ce1dc90038a68212.png'}
             __setRoute={this.props.__setRoute}
             currentRoute={this.props.currentRoute}
