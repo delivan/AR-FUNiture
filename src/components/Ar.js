@@ -4,7 +4,7 @@ import Button from 'material-ui/Button';
 import StarIcon from '@material-ui/icons/Star';
 import PropTypes from 'prop-types';
 import Drawer from './Drawer';
-import {databaseRef, firebaseAuth} from '../config/firebase';
+import {databaseRef, firebaseAuth, storageRef} from '../config/firebase';
 
 const styles = {
   renderer: {
@@ -63,41 +63,31 @@ const modern = [
     path: process.env.PUBLIC_URL + '/models/modern/lamp1/scene.gltf',
     scale: '2.5 2.5 2.5'
   },
-  {
-    idx: 5,
-    path: process.env.PUBLIC_URL + '/models/modern/table1/scene.gltf',
-    scale: '0.03 0.03 0.03'
-  },
 ]
 
 const wooden = [
   {
     idx: 0,
-    path: process.env.PUBLIC_URL + '/models/wooden/desk1/scene.gltf',
-    scale: '0.02 0.02 0.02'
-  },
-  {
-    idx: 1,
     path: process.env.PUBLIC_URL + '/models/wooden/closet1/scene.gltf',
     scale: '0.05 0.05 0.05'
   },
   {
-    idx: 2,
+    idx: 1,
     path: process.env.PUBLIC_URL + '/models/wooden/bed1/scene.gltf',
     scale: '0.5 0.5 0.5'
   },
   {
-    idx: 3,
+    idx: 2,
     path: process.env.PUBLIC_URL + '/models/wooden/cabinet1/scene.gltf',
     scale: '0.5 0.5 0.5'
   },
   {
-    idx: 4,
+    idx: 3,
     path: process.env.PUBLIC_URL + '/models/wooden/chair1/scene.gltf',
     scale: '0.01 0.01 0.01'
   },
   {
-    idx: 5,
+    idx: 4,
     path: process.env.PUBLIC_URL + '/models/wooden/table1/scene.gltf',
     scale: '0.2 0.2 0.2'
   }

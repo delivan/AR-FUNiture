@@ -44,10 +44,10 @@ const styles = theme => ({
     height: 'auto',
   },
   listBar: {
-    background: 'rgba(255, 255, 255, 1)'
+    background: 'rgba(0, 0, 0, 0.5)'
   },
   icon: {
-    color: 'rgba(0, 0, 0, 0.7)',
+    color: 'rgba(255, 255, 255, 0.5)',
   },
 });
 
@@ -151,6 +151,7 @@ class TemporaryDrawer extends Component {
                     <GridListTile onClick={() => this.selectBookmark(bookmarks[key].category, bookmarks[key].idx, bookmarks[key].scale)} key={bookmarks[key].key}>
                       <img src={bookmarks[key].url} alt={'test'}/>
                       <GridListTileBar
+                        title={bookmarks[key].category}
                         actionIcon={
                           <IconButton className={classes.icon} onClick={() => this.deleteBookmark(bookmarks[key].key)}>
                             <DeleteIcon />
@@ -159,7 +160,7 @@ class TemporaryDrawer extends Component {
                         className={classes.listBar}
                       />
                     </GridListTile>
-                  )) : 'hi'}
+                  )) : console.log('bookmark is null')}
                 </GridList>
               </div>
             </Collapse>

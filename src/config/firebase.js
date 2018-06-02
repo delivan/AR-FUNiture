@@ -13,3 +13,5 @@ firebase.initializeApp(config);
 
 export const databaseRef = firebase.database().ref();
 export const firebaseAuth = firebase.auth;
+export const storageRef = firebase.storage().refFromURL('gs://ar-funiture.appspot.com')
+
