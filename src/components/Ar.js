@@ -4,7 +4,7 @@ import Button from 'material-ui/Button';
 import StarIcon from '@material-ui/icons/Star';
 import PropTypes from 'prop-types';
 import Drawer from './Drawer';
-import {databaseRef, firebaseAuth, storageRef} from '../config/firebase';
+import {databaseRef, firebaseAuth} from '../config/firebase';
 
 const styles = {
   renderer: {
@@ -122,16 +122,21 @@ class Ar extends Component {
   }
 
   componentDidUpdate = (prevProps, prevState, snapshot) => {
-    const { currentCategory, currentPath, defaultScale } = this.state;
+    const { currentCategory, currentIdx, currentPath, defaultScale } = this.state;
     if (prevState.currentIdx !== undefined || prevState.currentCategory !== undefined) {
       const element = document.getElementById(currentCategory);
       var scale_arr = defaultScale.split(' ');
       if (prevState.currentCategory !== currentCategory) {
         element.object3D.src = currentPath;
+        element.object3D.scale.x = scale_arr[0];
+        element.object3D.scale.y = scale_arr[1];
+        element.object3D.scale.z = scale_arr[2];
+      } 
+      else if (prevState.currentIdx !== currentIdx) {
+        element.object3D.scale.x = scale_arr[0];
+        element.object3D.scale.y = scale_arr[1];
+        element.object3D.scale.z = scale_arr[2];
       }
-      element.object3D.scale.x = scale_arr[0];
-      element.object3D.scale.y = scale_arr[1];
-      element.object3D.scale.z = scale_arr[2];
     }
   }
 
@@ -180,14 +185,10 @@ class Ar extends Component {
   }
 
   handleScale = (e) => {
-    e.preventDefault();
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-    
+    e.preventDefault();    
     const {currentCategory} = this.state;
     const element = document.getElementById(currentCategory);
-    switch ([e.target.name][0]) {
+    switch (e.target.name) {
       case 'x':
         element.object3D.scale.x = e.target.value;
         break;

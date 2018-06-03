@@ -54,13 +54,16 @@ const styles = theme => ({
 class TemporaryDrawer extends Component {
   constructor(props) {
     super(props);
+    var scale = this.props.scale;
+    var scale_arr = scale.split(' ');
     this.state = {
       menuOpen: false,
       sizeOpen: false,
       bookmarkOpen: false,
       bookmarks: [],
-      defaultScale: this.props.scale,
-      defaultScaleArr: this.props.scale.split(' ')
+      x: scale_arr[0],
+      y: scale_arr[2],
+      z: scale_arr[1],
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
     this.updateScale = this.updateScale.bind(this);
@@ -82,9 +85,12 @@ class TemporaryDrawer extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.scale !== prevState.defaultScale) {
+      var scale = nextProps.scale;
+      var scale_arr = scale.split(' ');
       return {
-        defaultScale: nextProps.scale,
-        defaultScaleArr: nextProps.scale.split(' ') 
+        x: scale_arr[0],
+        y: scale_arr[2],
+        z: scale_arr[1],
       };
     }
     return null;
@@ -122,13 +128,9 @@ class TemporaryDrawer extends Component {
     bookmarkRef.child(key).remove();
   }
 
-  anotherUpdateScale = (e) => {
-    this.props.onHandleScale(e);
-  }
-
   render() {
     const {classes} = this.props;
-    const {bookmarks, defaultScaleArr} = this.state;
+    const {bookmarks, x, y, z} = this.state;
 
     return (<div>
       <Button onClick={this.toggleDrawer} variant="raised" color="secondary">메뉴</Button>
@@ -160,7 +162,7 @@ class TemporaryDrawer extends Component {
                         className={classes.listBar}
                       />
                     </GridListTile>
-                  )) : console.log('bookmark is null')}
+                  )) : ''}
                 </GridList>
               </div>
             </Collapse>
@@ -180,30 +182,30 @@ class TemporaryDrawer extends Component {
                   name="x"
                   type="range"
                   onChange={this.updateScale}
-                  min={defaultScaleArr[0] / 2}
-                  max={defaultScaleArr[0] * 2}
-                  step={defaultScaleArr[0] / 10}
-                  defaultValue={defaultScaleArr[0]}
+                  min={x / 2}
+                  max={x * 2}
+                  step={x / 10}
+                  defaultValue={x}
                   className={classes.sizeField}
                 />
                 세로 :<input
                   name="z"
                   type="range"
                   onChange={this.updateScale}
-                  min={defaultScaleArr[2] / 2}
-                  max={defaultScaleArr[2] * 2}
-                  step={defaultScaleArr[2]  / 10}
-                  defaultValue={defaultScaleArr[0]}
+                  min={z / 2}
+                  max={z * 2}
+                  step={z / 10}
+                  defaultValue={z}
                   className={classes.sizeField}
                 />
                 높이 :<input
                   name="y"
                   type="range"
                   onChange={this.updateScale}
-                  min={defaultScaleArr[1] / 2}
-                  max={defaultScaleArr[1] * 2}
-                  step={defaultScaleArr[1] / 10}
-                  defaultValue={defaultScaleArr[1]}
+                  min={y / 2}
+                  max={y * 2}
+                  step={y / 10}
+                  defaultValue={y}
                   className={classes.sizeField}
                 />
               </div>
