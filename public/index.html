@@ -7,15 +7,9 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <script src="%PUBLIC_URL%/aframe.min.js"></script>
     <script src="%PUBLIC_URL%/ar.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <title>AR FUNiture</title>
   </head>
   <body>
     <div id="root"></div>
-    <script type="text/javascript">
-      $(window).resize(function(){resizeYoutube();});
-      $(function(){resizeYoutube();});
-      function resizeYoutube(){ $("iframe").each(function(){ if( /^https?:\/\/www.youtube.com\/embed\//g.test($(this).attr("src")) ){ $(this).css("width","100%"); $(this).css("height",Math.ceil( parseInt($(this).css("width")) * 480 / 854 ) + "px");} }); }
-    </script>
   </body>
 </html>

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { firebaseAuth } from '../config/firebase'
 import Grid from 'material-ui/Grid'
 
-
 export default class Login extends Component {
   constructor(props){
       super(props);
