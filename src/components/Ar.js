@@ -2,11 +2,20 @@ import React, {Component} from 'react';
 import {AFrameRenderer, Marker} from 'react-web-ar';
 import Button from 'material-ui/Button';
 import StarIcon from '@material-ui/icons/Star';
+import Snackbar from 'material-ui/Snackbar';
+import SnackbarContent from 'material-ui/Snackbar/SnackbarContent';
+import CircularProgress from 'material-ui/Progress/CircularProgress';
+import { withStyles } from 'material-ui/styles';
 import PropTypes from 'prop-types';
 import Drawer from './Drawer';
 import {databaseRef, firebaseAuth} from '../config/firebase';
 
-const styles = {
+const styles = theme => ({
+  progress: {
+    position: 'fixed',
+    top: '50%',
+    left: '45%',
+  },
   renderer: {
     overflow: 'hidden'
   },
@@ -34,34 +43,41 @@ const styles = {
     position: 'fixed',
     right: '1rem',
     top: '1rem'
+  },
+  snackbar: {
+    left: '40%',
+    right: '50%',
+    bottom: '1rem',
+    minWidth: '100px',
+    height: theme.spacing.unit * 4,
   }
-};
+});
 
 const modern = [
   {
     idx: 0,
     path: process.env.PUBLIC_URL + '/models/modern/chair1/scene.gltf',
-    scale: '0.03 0.03 0.03'
+    scale: '0.03 0.03 0.03',
+    thumbnail: process.env.PUBLIC_URL + '/models/modern/chair1/thumbnail.png'
   },
   {
     idx: 1,
-    path: process.env.PUBLIC_URL + '/models/modern/desk1/scene.gltf',
-    scale: '0.002 0.002 0.002'
+    path: process.env.PUBLIC_URL + '/models/modern/sofa1/scene.gltf',
+    scale: '0.002 0.002 0.002',
+    thumbnail: process.env.PUBLIC_URL + '/models/modern/sofa1/thumbnail.png'
   },
   {
     idx: 2,
-    path: process.env.PUBLIC_URL + '/models/modern/sofa1/scene.gltf',
-    scale: '0.002 0.002 0.002'
+    path: process.env.PUBLIC_URL + '/models/modern/bed1/scene.gltf',
+    scale: '1.8 1.8 1.8',
+    thumbnail: process.env.PUBLIC_URL + '/models/modern/bed1/thumbnail.png'
+
   },
   {
     idx: 3,
-    path: process.env.PUBLIC_URL + '/models/modern/bed1/scene.gltf',
-    scale: '2 2 2'
-  },
-  {
-    idx: 4,
     path: process.env.PUBLIC_URL + '/models/modern/lamp1/scene.gltf',
-    scale: '2.5 2.5 2.5'
+    scale: '2 2 2',
+    thumbnail: process.env.PUBLIC_URL + '/models/modern/lamp1/thumbnail.png'
   },
 ]
 
@@ -69,38 +85,42 @@ const wooden = [
   {
     idx: 0,
     path: process.env.PUBLIC_URL + '/models/wooden/closet1/scene.gltf',
-    scale: '0.05 0.05 0.05'
+    scale: '0.05 0.05 0.05',
+    thumbnail: process.env.PUBLIC_URL + '/models/wooden/closet1/thumbnail.png'
   },
   {
     idx: 1,
     path: process.env.PUBLIC_URL + '/models/wooden/bed1/scene.gltf',
-    scale: '0.5 0.5 0.5'
+    scale: '0.3 0.3 0.3',
+    thumbnail: process.env.PUBLIC_URL + '/models/wooden/bed1/thumbnail.png'
+
   },
   {
     idx: 2,
     path: process.env.PUBLIC_URL + '/models/wooden/cabinet1/scene.gltf',
-    scale: '0.5 0.5 0.5'
+    scale: '0.4 0.4 0.4',
+    thumbnail: process.env.PUBLIC_URL + '/models/wooden/cabinet1/thumbnail.png'
   },
   {
     idx: 3,
-    path: process.env.PUBLIC_URL + '/models/wooden/chair1/scene.gltf',
-    scale: '0.01 0.01 0.01'
-  },
-  {
-    idx: 4,
     path: process.env.PUBLIC_URL + '/models/wooden/table1/scene.gltf',
-    scale: '0.2 0.2 0.2'
+    scale: '0.2 0.2 0.2',
+    thumbnail: process.env.PUBLIC_URL + '/models/wooden/table1/thumbnail.png'
   }
 ]
 
 class Ar extends Component {
   constructor(props) {
     super(props);
+    var furnitures = [];
+    this.props.category === 'modern' ? furnitures = modern: furnitures = wooden;
     this.state = {
       currentCategory: this.props.category,
       currentIdx: 0,
-      currentPath : this.props.category === 'modern' ? modern[0].path : wooden[0].path,
-      defaultScale: this.props.category === 'modern' ? modern[0].scale : wooden[0].scale,
+      currentPath : furnitures[0].path,
+      defaultScale: furnitures[0].scale,
+      open: false,
+      gltfLoaded: false,
     };
     this.handleLeft = this.handleLeft.bind(this);
     this.handleRight = this.handleRight.bind(this);
@@ -110,21 +130,22 @@ class Ar extends Component {
   }
 
   componentDidMount = () => {
-    const element = document.getElementById(this.props.category);
-    if (this.props.category === 'modern') {
-      element.src = modern[0].path 
-      element.scale = modern[0].scale
-    }
-    else {
-      element.src = wooden[0].path 
-      element.scale = wooden[0].scale
-    }
+    var furnitures = [];
+    this.props.category === 'modern' ? furnitures = modern: furnitures = wooden;
+    var element = document.getElementById(this.props.category);
+    element.src = furnitures[0].path 
+    element.scale = furnitures[0].scale
+    document.querySelector('.furniture').addEventListener('model-loaded', () => {
+      this.setState({
+        gltfLoaded: true,
+      });
+    });
   }
-
+    
   componentDidUpdate = (prevProps, prevState, snapshot) => {
-    const { currentCategory, currentIdx, currentPath, defaultScale } = this.state;
+    var { currentCategory, currentIdx, currentPath, defaultScale } = this.state;
     if (prevState.currentIdx !== undefined || prevState.currentCategory !== undefined) {
-      const element = document.getElementById(currentCategory);
+      var element = document.getElementById(currentCategory);
       var scale_arr = defaultScale.split(' ');
       if (prevState.currentCategory !== currentCategory) {
         element.object3D.src = currentPath;
@@ -145,49 +166,53 @@ class Ar extends Component {
   }
 
   handleLeft() {
-    const { currentCategory, currentIdx } = this.state;
-    var numOfFurniture;
-    currentCategory === 'modern' ? numOfFurniture = modern.length-1 : numOfFurniture = wooden.length-1
+    var { currentCategory, currentIdx } = this.state;
+    var furnitures = [];
+    currentCategory === 'modern' ? furnitures = modern : furnitures = wooden;
     if (currentIdx === 0) {
       this.setState({
-        currentIdx: numOfFurniture,
-        currentPath: currentCategory === 'modern' ? modern[numOfFurniture].path : wooden[numOfFurniture].path,
-        defaultScale: currentCategory === 'modern' ? modern[numOfFurniture].scale : wooden[numOfFurniture].scale,
+        currentIdx: furnitures.length-1,
+        currentPath: furnitures[furnitures.length-1].path,
+        defaultScale: furnitures[furnitures.length-1].scale,
+        gltfLoaded: false,
       });
     } 
     else {
       this.setState({
         currentIdx: currentIdx - 1,
-        currentPath: currentCategory === 'modern' ? modern[currentIdx-1].path : wooden[currentIdx-1].path,
-        defaultScale: currentCategory === 'modern' ? modern[currentIdx-1].scale : wooden[currentIdx-1].scale,
+        currentPath: furnitures[currentIdx-1].path,
+        defaultScale: furnitures[currentIdx-1].scale,
+        gltfLoaded: false,
       });
     }
   }
 
   handleRight() {
-    const { currentCategory, currentIdx } = this.state;
-    var numOfFurniture;
-    currentCategory === 'modern' ? numOfFurniture = modern.length-1 : numOfFurniture = wooden.length-1
-    if (currentIdx === numOfFurniture) {
+    var { currentCategory, currentIdx } = this.state;
+    var furnitures = [];
+    currentCategory === 'modern' ? furnitures = modern : furnitures = wooden;
+    if (currentIdx === furnitures.length-1) {
       this.setState({
         currentIdx: 0,
-        currentPath: currentCategory === 'modern' ? modern[0].path : wooden[0].path,
-        defaultScale: currentCategory === 'modern' ? modern[0].scale : wooden[0].scale,
+        currentPath: furnitures[0].path,
+        defaultScale: furnitures[0].scale,
+        gltfLoaded: false,
       });
     } 
     else {
       this.setState({
         currentIdx: currentIdx + 1,
-        currentPath: currentCategory === 'modern' ? modern[currentIdx+1].path : wooden[currentIdx+1].path,
-        defaultScale: currentCategory === 'modern' ? modern[currentIdx+1].scale : wooden[currentIdx+1].scale,
+        currentPath: furnitures[currentIdx+1].path,
+        defaultScale: furnitures[currentIdx+1].scale,
+        gltfLoaded: false,
       });
     }
   }
 
   handleScale = (e) => {
     e.preventDefault();    
-    const {currentCategory} = this.state;
-    const element = document.getElementById(currentCategory);
+    var {currentCategory} = this.state;
+    var element = document.getElementById(currentCategory);
     switch (e.target.name) {
       case 'x':
         element.object3D.scale.x = e.target.value;
@@ -203,25 +228,23 @@ class Ar extends Component {
     }
   }
 
-  handleBookmark = (idx, scale) => {
-    const {currentCategory} = this.state;
-
-    var screenshot = document.querySelector('a-scene').components.screenshot;
-    screenshot.resize(256, 256);
-    var canvas = screenshot.getCanvas('perspective');
+  handleBookmark = (category, idx, scale) => {
+    var furnitures = [];
+    category === 'modern' ? furnitures = modern: furnitures = wooden;
 
     var bookmarkRef = databaseRef.child('users/' + firebaseAuth().currentUser.uid + '/bookmark')
     var bookmarkKey = bookmarkRef.push().key;
     var bookmarkData = {
       key: bookmarkKey,
-      category: currentCategory,
+      category: category,
       idx: idx,
       scale: scale,
-      url: canvas.toDataURL("image/png")
+      thumbnail: furnitures[idx].thumbnail
     };
     var updates = {};
     updates[bookmarkKey] = bookmarkData;
     bookmarkRef.update(updates);
+    this.handleBookmarkClick();
   }
 
   showBookmark = (category, idx, scale) => {
@@ -229,49 +252,84 @@ class Ar extends Component {
       this.setState({
         currentIdx: idx,
         currentPath: category === 'modern' ? modern[idx].path : wooden[idx].path,
-        defaultScale: scale
+        defaultScale: scale,
       });
+      if (this.state.currentCategory !== category || this.state.currentIdx !== idx) {
+        this.setState({
+          gltfLoaded: false,
+        });
+      }
     });
   }
 
+  handleBookmarkClick = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({ open: false });
+  };
+
   render() {
-    const {currentCategory, currentIdx, currentPath, defaultScale} = this.state;
-    return (<div style={styles.renderer}>
+    const { classes } = this.props;
+    const { currentCategory, currentIdx, currentPath, defaultScale, gltfLoaded } = this.state;
+    return (<div className={classes.renderer}>
       <AFrameRenderer>
         <Marker parameters={{
             preset: 'hiro',
           }}>
-          <a-gltf-model id={currentCategory} src={currentPath} scale={defaultScale}/>
+          <a-gltf-model id={currentCategory} src={currentPath} scale={defaultScale} class='furniture'/>
         </Marker>
-        <div style={styles.leftButton}>
+        {!gltfLoaded && <CircularProgress className={classes.progress} color="secondary" />}
+        <div className={classes.leftButton}>
           <Button onClick={this.handleLeft} variant="fab">&lt;</Button>
         </div>
-        <div style={styles.rightButton}>
+        <div className={classes.rightButton}>
           <Button onClick={this.handleRight} variant="fab">&gt;</Button>
         </div>
-        <div style={styles.backButton}>
+        <div className={classes.backButton}>
           <Button onClick={this.handleBack} variant="raised" color="secondary">뒤로가기</Button>
         </div>
-        <div style={styles.bookmarkButton}>
-          <Button onClick={() => this.handleBookmark(currentIdx, defaultScale)} variant="fab" color="secondary"><StarIcon/></Button>
+        <div className={classes.bookmarkButton}>
+          <Button onClick={() => this.handleBookmark(currentCategory, currentIdx, defaultScale)} variant="fab" color="secondary"><StarIcon/></Button>
         </div>
-        <div style={styles.drawer}>
+        <div className={classes.drawer}>
           <Drawer 
             scale={defaultScale}
             onHandleScale={this.handleScale} 
             onSelectBookmark={this.showBookmark}
           />
         </div>
+          <Snackbar
+            className={classes.snackbar}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center',
+            }}
+            open={this.state.open}
+            autoHideDuration={2000}
+            onClose={this.handleClose}
+          >
+            <SnackbarContent
+              className={classes.snackbar}
+              message={<span>추가 완료</span>}
+            />
+          </Snackbar>
       </AFrameRenderer>
     </div>);
   }
 }
 
 Ar.propTypes = {
+  classes: PropTypes.object.isRequired,
   category: PropTypes.string,
   __setCategory: PropTypes.func,
   currentRoute: PropTypes.string,
-  __setRoute: PropTypes.func
+  __setRoute: PropTypes.func,
 }
 
-export default Ar;
+export default withStyles(styles)(Ar);

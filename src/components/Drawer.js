@@ -35,12 +35,12 @@ const styles = theme => ({
     marginRight: theme.spacing.unit * 2,
     marginTop : theme.spacing.unit * 2,
     marginBottom : theme.spacing.unit * 2,
-    width: 150
+    width: 130,
   },
   gridList: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 300,
+    width: 260,
     height: 'auto',
   },
   listBar: {
@@ -61,6 +61,7 @@ class TemporaryDrawer extends Component {
       sizeOpen: false,
       bookmarkOpen: false,
       bookmarks: [],
+      deleted: false,
       x: scale_arr[0],
       y: scale_arr[2],
       z: scale_arr[1],
@@ -82,7 +83,7 @@ class TemporaryDrawer extends Component {
       });
     });
   }
-
+  
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.scale !== prevState.defaultScale) {
       var scale = nextProps.scale;
@@ -99,7 +100,7 @@ class TemporaryDrawer extends Component {
   toggleDrawer = () => {
     this.setState({
       menuOpen: !this.state.menuOpen
-    });
+    }); 
   };
 
   updateScale = (e) => {
@@ -118,12 +119,15 @@ class TemporaryDrawer extends Component {
     });
   }
 
-  selectBookmark(category, idx, scale) {
+  selectBookmark = (category, idx, scale) => {
     this.props.onSelectBookmark(category, idx, scale);
     this.toggleDrawer();
   } 
 
-  deleteBookmark(key) {
+  deleteBookmark = (key) => {
+    this.setState({
+      deleted: true,
+    })
     var bookmarkRef = databaseRef.child('users/' + firebaseAuth().currentUser.uid + '/bookmark')
     bookmarkRef.child(key).remove();
   }
@@ -134,7 +138,7 @@ class TemporaryDrawer extends Component {
 
     return (<div>
       <Button onClick={this.toggleDrawer} variant="raised" color="secondary">메뉴</Button>
-      <Drawer anchor="right" open={this.state.menuOpen} onClose={this.toggleDrawer}>
+      <Drawer anchor="right" open={this.state.menuOpen} onClose={this.toggleDrawer} ModalProps={{keepMounted: true}}>
         <div className={classes.list}>
           <ListItem role="button" onClick={this.handleBookmarkButton}>
             <ListItemIcon>
@@ -146,16 +150,16 @@ class TemporaryDrawer extends Component {
                 : <ExpandMore/>
             }
             </ListItem>
-            <Collapse in={this.state.bookmarkOpen} timeout="auto" unmountOnExit>
+            <Collapse in={this.state.bookmarkOpen} timeout="auto">
               <div className={classes.bookmarkList}>
                 <GridList cellHeight={130} className={classes.gridList}>
                   {bookmarks !== null ? Object.keys(bookmarks).map(key => (
-                    <GridListTile onClick={() => this.selectBookmark(bookmarks[key].category, bookmarks[key].idx, bookmarks[key].scale)} key={bookmarks[key].key}>
-                      <img src={bookmarks[key].url} alt={'test'}/>
+                    <GridListTile onClick={(e) => this.selectBookmark(bookmarks[key].category, bookmarks[key].idx, bookmarks[key].scale)} key={bookmarks[key].key}>
+                      <img src={bookmarks[key].thumbnail} alt={'thumbnail'}/>
                       <GridListTileBar
                         title={bookmarks[key].category}
                         actionIcon={
-                          <IconButton className={classes.icon} onClick={() => this.deleteBookmark(bookmarks[key].key)}>
+                          <IconButton className={classes.icon} onClick={(e) => {e.stopPropagation();this.deleteBookmark(bookmarks[key].key)}}>
                             <DeleteIcon />
                           </IconButton>
                         }
@@ -176,7 +180,7 @@ class TemporaryDrawer extends Component {
                 : <ExpandMore/>
             }
             </ListItem>
-            <Collapse in={this.state.sizeOpen} timeout="auto" unmountOnExit>
+            <Collapse in={this.state.sizeOpen} timeout="auto">
               <div className={classes.sizeField}>
                 가로 :<input
                   name="x"

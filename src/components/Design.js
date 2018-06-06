@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import Sample from '../img/designSample.jpg';
 import '../css/Design.css';
 import { Card, CardBody, CardImage, CardTitle, CardText } from 'mdbreact';
 import PropTypes from 'prop-types';

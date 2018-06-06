@@ -40,15 +40,11 @@ class App extends Component {
   }
 
   __setRoute = currentRoute => {
-    this.setState({ currentRoute }, () => {
-      console.log('current route', this.state.currentRoute);
-    });
+    this.setState({ currentRoute }, () => {});
   }
 
   __setCategory = category => {
-    this.setState({ category }, () => {
-      console.log('current category', this.state.category);
-    });
+    this.setState({ category }, () => {});
   }
 
   onClick() {

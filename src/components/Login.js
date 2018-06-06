@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { login } from '../action/Auth';
 import PropTypes from 'prop-types';
-import { firebaseAuth } from '../config/firebase'
 import Grid from 'material-ui/Grid'
 
 export default class Login extends Component {
@@ -27,7 +26,6 @@ export default class Login extends Component {
       e.preventDefault();
       try {
         await login(this.state.email, this.state.pw);   
-        console.log('current user:', firebaseAuth().currentUser)
         this.props.__setRoute('home')
       } catch(e){
           alert(e.meesage);
