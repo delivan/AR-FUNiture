@@ -56,26 +56,26 @@ const styles = theme => ({
 const modern = [
   {
     idx: 0,
-    path: process.env.PUBLIC_URL + '/models/modern/chair1/scene.gltf',
+    path: '#modern_chair',
     scale: '0.03 0.03 0.03',
     thumbnail: process.env.PUBLIC_URL + '/models/modern/chair1/thumbnail.png'
   },
   {
     idx: 1,
-    path: process.env.PUBLIC_URL + '/models/modern/sofa1/scene.gltf',
+    path: '#modern_sofa',
     scale: '0.002 0.002 0.002',
     thumbnail: process.env.PUBLIC_URL + '/models/modern/sofa1/thumbnail.png'
   },
   {
     idx: 2,
-    path: process.env.PUBLIC_URL + '/models/modern/bed1/scene.gltf',
+    path: '#modern_bed',
     scale: '1.8 1.8 1.8',
     thumbnail: process.env.PUBLIC_URL + '/models/modern/bed1/thumbnail.png'
 
   },
   {
     idx: 3,
-    path: process.env.PUBLIC_URL + '/models/modern/lamp1/scene.gltf',
+    path: '#modern_lamp',
     scale: '2 2 2',
     thumbnail: process.env.PUBLIC_URL + '/models/modern/lamp1/thumbnail.png'
   },
@@ -84,26 +84,26 @@ const modern = [
 const wooden = [
   {
     idx: 0,
-    path: process.env.PUBLIC_URL + '/models/wooden/closet1/scene.gltf',
+    path: '#wooden_closet',
     scale: '0.05 0.05 0.05',
     thumbnail: process.env.PUBLIC_URL + '/models/wooden/closet1/thumbnail.png'
   },
   {
     idx: 1,
-    path: process.env.PUBLIC_URL + '/models/wooden/bed1/scene.gltf',
+    path: '#wooden_bed',
     scale: '0.3 0.3 0.3',
     thumbnail: process.env.PUBLIC_URL + '/models/wooden/bed1/thumbnail.png'
 
   },
   {
     idx: 2,
-    path: process.env.PUBLIC_URL + '/models/wooden/cabinet1/scene.gltf',
+    path: '#wooden_cabinet',
     scale: '0.4 0.4 0.4',
     thumbnail: process.env.PUBLIC_URL + '/models/wooden/cabinet1/thumbnail.png'
   },
   {
     idx: 3,
-    path: process.env.PUBLIC_URL + '/models/wooden/table1/scene.gltf',
+    path: '#wooden_table',
     scale: '0.2 0.2 0.2',
     thumbnail: process.env.PUBLIC_URL + '/models/wooden/table1/thumbnail.png'
   }
@@ -279,12 +279,22 @@ class Ar extends Component {
     const { currentCategory, currentIdx, currentPath, defaultScale, gltfLoaded } = this.state;
     return (<div className={classes.renderer}>
       <AFrameRenderer>
+        <a-assets>
+          <a-asset-item id="modern_chair" src={process.env.PUBLIC_URL + '/models/modern/chair1/scene.gltf'}></a-asset-item>
+          <a-asset-item id="modern_sofa" src={process.env.PUBLIC_URL + '/models/modern/sofa1/scene.gltf'}></a-asset-item>
+          <a-asset-item id="modern_bed" src={process.env.PUBLIC_URL + '/models/modern/bed1/scene.gltf'}></a-asset-item>
+          <a-asset-item id="modern_lamp" src={process.env.PUBLIC_URL + '/models/modern/lamp1/scene.gltf'}></a-asset-item>
+          <a-asset-item id="wooden_closet" src={process.env.PUBLIC_URL + '/models/wooden/closet1/scene.gltf'}></a-asset-item>
+          <a-asset-item id="wooden_bed" src={process.env.PUBLIC_URL + '/models/wooden/bed1/scene.gltf'}></a-asset-item>
+          <a-asset-item id="wooden_cabinet" src={process.env.PUBLIC_URL + '/models/wooden/cabinet1/scene.gltf'}></a-asset-item>
+          <a-asset-item id="wooden_table" src={process.env.PUBLIC_URL + '/models/wooden/table1/scene.gltf'}></a-asset-item>
+        </a-assets>
         <Marker parameters={{
             preset: 'hiro',
           }}>
           <a-gltf-model id={currentCategory} src={currentPath} scale={defaultScale} class='furniture'/>
         </Marker>
-        {!gltfLoaded && <CircularProgress className={classes.progress} color="secondary" />}
+        {!gltfLoaded && <CircularProgress className={classes.progress} color="secondary"/>}
         <div className={classes.leftButton}>
           <Button onClick={this.handleLeft} variant="fab">&lt;</Button>
         </div>
